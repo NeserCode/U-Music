@@ -28,6 +28,7 @@ export default defineConfig(async () => ({
 			"@components": resolve(__dirname, "src/components"),
 			"@composables": resolve(__dirname, "src/composables"),
 			"@frameworks": resolve(__dirname, "src/frameworks"),
+			"@presets": resolve(__dirname, "src/presets"),
 		},
 	},
 }))

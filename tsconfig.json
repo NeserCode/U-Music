@@ -13,7 +13,8 @@
 			"@assets/*": ["src/assets/*"],
 			"@components/*": ["src/components/*"],
 			"@composables/*": ["src/composables/*"],
-			"@frameworks/*": ["src/frameworks/*"]
+			"@frameworks/*": ["src/frameworks/*"],
+			"@presets/*": ["src/presets/*"]
 		},
 
 		/* Bundler mode */
