@@ -6,7 +6,7 @@
 		"distDir": "../dist"
 	},
 	"package": {
-		"productName": "u-music",
+		"productName": "U Music",
 		"version": "0.0.0"
 	},
 	"tauri": {
@@ -20,12 +20,11 @@
 		},
 		"windows": [
 			{
-				"title": "u-music",
-				"fullscreen": false,
-				"maximizable": false,
-				"resizable": false,
+				"title": "U Music",
 				"width": 800,
 				"height": 600,
+				"minWidth": 800,
+				"minHeight": 600,
 				"decorations": false,
 				"transparent": true
 			}
