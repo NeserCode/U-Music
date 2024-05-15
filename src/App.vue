@@ -1,6 +1,10 @@
 <script lang="ts" setup>
+import Simplebar from "simplebar-vue"
+import "simplebar-vue/dist/simplebar.min.css"
+
 import TitleBar from "@frameworks/TitleBar.vue"
 import TopLinks from "@frameworks/TopLinks.vue"
+
 import { useAppRounded } from "@composables/useAppRounded"
 import { onMounted, ref } from "vue"
 import { useRoute } from "vue-router"
@@ -19,13 +23,16 @@ onMounted(() => {
 	<div class="app-container" ref="application">
 		<TitleBar />
 		<TopLinks />
-		<router-view id="context" v-slot="{ Component }">
-			<Transition name="view" mode="out-in" :appear="true">
-				<keep-alive :include="['Home']">
-					<component :is="Component" :key="$route.fullPath" />
-				</keep-alive>
-			</Transition>
-		</router-view>
+
+		<Simplebar>
+			<router-view id="context" v-slot="{ Component }">
+				<Transition name="view" mode="out-in" :appear="true">
+					<keep-alive :include="['Home']">
+						<component :is="Component" :key="$route.fullPath" />
+					</keep-alive>
+				</Transition>
+			</router-view>
+		</Simplebar>
 	</div>
 </template>
 
@@ -58,7 +65,7 @@ html.dark {
 
 <style lang="postcss" scoped>
 .app-container {
-	@apply w-screen h-screen flex flex-col box-border
+	@apply relative w-screen h-screen flex flex-col box-border
 	border border-slate-400
 	bg-slate-50 dark:bg-slate-600
 	transition-colors ease-in-out duration-300 overflow-hidden;
@@ -68,8 +75,7 @@ html.dark {
 }
 
 #context {
-	height: calc(100vh - 2rem - 2px);
+	height: calc(100vh - 2rem - 6rem - 2px);
 	width: calc(100vw - 2px);
-	@apply overflow-x-hidden overflow-y-hidden;
 }
 </style>

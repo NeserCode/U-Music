@@ -20,20 +20,24 @@ import {
 
 <style lang="postcss" scoped>
 .app-top-links {
-	@apply w-full h-16 flex justify-center items-center gap-4
+	@apply w-full h-24 flex justify-center items-center md:gap-4 lg:gap-8
   select-none;
 }
 
 .app-top-links .link {
-	@apply inline-flex justify-center items-center gap-1 px-2.5 py-0.5
+	@apply inline-flex justify-center items-center md:gap-1 md:px-2.5 md:py-0.5 lg:gap-2 lg:py-1 lg:px-3
+	md:text-base lg:text-lg
   border-2 rounded border-slate-200 dark:border-slate-400
   hover:border-green-400 dark:hover:border-green-500
   bg-slate-100 dark:bg-slate-500
   outline-none focus:ring-2 focus:ring-green-300 dark:focus:ring-green-400
   transition-all ease-in-out duration-300;
 }
+.link.router-link-exact-active {
+	@apply text-sky-600 dark:text-sky-300 border-sky-500 dark:border-sky-400;
+}
 
 .link .icon {
-	@apply w-4 h-4;
+	@apply md:w-4 md:h-4 lg:w-5 lg:h-5;
 }
 </style>
