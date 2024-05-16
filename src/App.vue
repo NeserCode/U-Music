@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import Simplebar from "simplebar-vue"
-import "simplebar-vue/dist/simplebar.min.css"
-
+import Scrollable from "@frameworks/Scrollable.vue"
 import TitleBar from "@frameworks/TitleBar.vue"
 import TopLinks from "@frameworks/TopLinks.vue"
 
@@ -10,6 +8,7 @@ import { onMounted, ref } from "vue"
 import { useRoute } from "vue-router"
 
 const $route = useRoute()
+const view = ref<HTMLDivElement>()
 
 const application = ref<HTMLDivElement>()
 const { listeningRounded } = useAppRounded(application)
@@ -24,15 +23,15 @@ onMounted(() => {
 		<TitleBar />
 		<TopLinks />
 
-		<Simplebar>
-			<router-view id="context" v-slot="{ Component }">
+		<router-view id="context" v-slot="{ Component }">
+			<Scrollable>
 				<Transition name="view" mode="out-in" :appear="true">
 					<keep-alive :include="['Home']">
-						<component :is="Component" :key="$route.fullPath" />
+						<component ref="view" :is="Component" :key="$route.fullPath" />
 					</keep-alive>
 				</Transition>
-			</router-view>
-		</Simplebar>
+			</Scrollable>
+		</router-view>
 	</div>
 </template>
 
@@ -60,6 +59,25 @@ html.dark {
 .view-enter-from,
 .view-leave-to {
 	@apply opacity-0;
+}
+
+/* Keyframes */
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
 }
 </style>
 

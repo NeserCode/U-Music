@@ -73,7 +73,7 @@ function openModal() {
 						<DialogPanel
 							class="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all duration-300 ease-in-out transform bg-gray-100 shadow-xl text-slate-600 dark:text-slate-200 dark:bg-gray-800 rounded-2xl"
 						>
-							<DialogTitle as="h3" class="text-lg font-medium leading-6">
+							<DialogTitle as="h3" class="text-lg font-bold leading-6">
 								<slot name="title"></slot>
 							</DialogTitle>
 							<div class="mt-2">

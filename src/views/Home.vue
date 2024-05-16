@@ -2,7 +2,7 @@
 
 <template>
 	<div class="view-home">
-		<span v-for="i in 100">{{ i }}</span>
+		<p v-for="i in 100" class="snap-start">{{ i }}</p>
 	</div>
 </template>
 
