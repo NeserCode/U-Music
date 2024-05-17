@@ -26,7 +26,7 @@ onMounted(() => {
 		<router-view id="context" v-slot="{ Component }">
 			<Scrollable>
 				<Transition name="view" mode="out-in" :appear="true">
-					<keep-alive :include="['Home']">
+					<keep-alive :include="['Home', 'Setting']">
 						<component ref="view" :is="Component" :key="$route.fullPath" />
 					</keep-alive>
 				</Transition>
@@ -95,5 +95,10 @@ html.dark {
 #context {
 	height: calc(100vh - 2rem - 6rem - 2px);
 	width: calc(100vw - 2px);
+}
+@media (max-width: 1024px) {
+	#context {
+		height: calc(100vh - 2rem - 4rem - 2px);
+	}
 }
 </style>

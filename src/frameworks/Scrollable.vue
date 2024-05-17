@@ -22,6 +22,7 @@ const initSimpleBar = useThrottleFn(() => {
 			else throw Error("Scrollable cannot reach the content, view not found.")
 
 			scrollbarRef.value.init()
+			console.log(isScrollbarAutoHide.value)
 		})
 	}, 500)
 }, 300)
@@ -46,9 +47,6 @@ watch(isScrollbarAutoHide, () => {
 </template>
 
 <style lang="postcss">
-.simplebar-content-wrapper {
-	@apply snap-y snap-mandatory;
-}
 .simplebar-track.simplebar-vertical {
 	@apply w-4;
 }

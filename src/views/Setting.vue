@@ -98,18 +98,17 @@ const { isScrollbarAutoHide } = useScrollbar()
 <style lang="postcss" scoped>
 .view-setting {
 	@apply w-full h-full flex flex-col items-center gap-1 md:px-24 lg:px-48
-	select-none snap-y snap-mandatory;
+	select-none;
 }
 
 .setting-header {
-	@apply w-full h-fit flex items-center
-	text-2xl font-semibold snap-start
-	transition-all ease-in-out duration-300;
+	@apply sticky w-full h-fit top-0 flex items-center py-4
+	text-2xl bg-slate-50 dark:bg-slate-600 font-semibold
+	transition-all ease-in-out duration-300 z-50;
 }
 
 .setting-items {
-	@apply w-full h-fit flex md:flex-col lg:flex-row lg:flex-wrap md:gap-2 lg:gap-6 py-4
-	snap-start
+	@apply w-full flex md:flex-col lg:flex-row lg:flex-wrap md:gap-2 lg:gap-6 py-4
 	transition-all ease-in-out duration-300;
 }
 

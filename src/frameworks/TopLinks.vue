@@ -20,8 +20,9 @@ import {
 
 <style lang="postcss" scoped>
 .app-top-links {
-	@apply w-full h-24 flex justify-center items-center md:gap-4 lg:gap-8
-  select-none;
+	@apply w-full md:h-16 lg:h-24 flex justify-center items-center md:gap-4 lg:gap-8
+	border-b border-slate-200 dark:border-slate-500
+  select-none transition-colors ease-in-out duration-300;
 }
 
 .app-top-links .link {
