@@ -101,7 +101,8 @@ async function close() {
 	content: "";
 	@apply absolute -left-1 h-2/3 w-px
 	rounded-full
-	bg-slate-300 dark:bg-slate-500;
+	bg-slate-300 dark:bg-slate-500
+	transition-all ease-in-out duration-300;
 }
 
 .icon {

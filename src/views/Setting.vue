@@ -7,6 +7,7 @@ import { ref } from "vue"
 import { useAppRounded } from "@composables/useAppRounded"
 import { useDarkMode } from "@composables/useDarkMode"
 import { useScrollbar } from "@composables/useScrollbar"
+import { useServerConfig } from "@composables/useServerConfig"
 
 const testFlag = useStorage("test-flag", true)
 const testInpput = useStorage("test-input", "")
@@ -17,6 +18,16 @@ function updateTempInput() {
 }
 function updateInput() {
 	testInpput.value = testTempInput.value
+}
+
+const appTempServer = ref("")
+const { server: appServer } = useServerConfig()
+
+function updateTempServer() {
+	appTempServer.value = appServer.value
+}
+function updateServer() {
+	appServer.value = appTempServer.value
 }
 
 const { isRounded } = useAppRounded()
@@ -91,6 +102,34 @@ const { isScrollbarAutoHide } = useScrollbar()
 				</template>
 				<template #sr-only> Scrollbar Auto Hide </template>
 			</SettingSwitchItem>
+		</div>
+		<!-- Server Setting -->
+		<div class="setting-header">
+			<span class="text">接口</span>
+		</div>
+		<div class="setting-items">
+			<SettingInputItem :open="updateTempServer" :close="updateServer">
+				<template #oTitle>
+					<span>接口地址</span>
+				</template>
+				<template #tips>
+					<span v-if="!appServer"
+						>决定应用使用的 NeteaseCloudMusicApi 位置。</span
+					>
+					<span v-else>🚀 {{ appServer }}</span>
+				</template>
+				<template #sr-only> Server Address Item </template>
+				<template #btn> 修改 </template>
+				<template #title> 修改接口地址 </template>
+				<template #content>
+					<input
+						type="text"
+						v-model="appTempServer"
+						class="setting-input-text"
+					/>
+				</template>
+				<template #confirm> 确认 </template>
+			</SettingInputItem>
 		</div>
 	</div>
 </template>

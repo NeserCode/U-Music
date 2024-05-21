@@ -58,7 +58,7 @@ const { disabled, open, close } = toRefs(switchProps)
 	@apply text-base font-normal;
 }
 .setting-tips {
-	@apply text-sm text-gray-400;
+	@apply text-sm whitespace-pre-line text-gray-400;
 }
 
 .setting-operation {

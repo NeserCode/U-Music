@@ -44,7 +44,7 @@ function openModal() {
 		<slot name="btn"></slot>
 	</button>
 	<TransitionRoot appear :show="isOpen && !disabled" as="div">
-		<Dialog as="div" @close="closeModal" class="relative z-10">
+		<Dialog as="div" @close="isOpen = false" class="relative z-10">
 			<TransitionChild
 				as="template"
 				enter="duration-300 ease-out"
