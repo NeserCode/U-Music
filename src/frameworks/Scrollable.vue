@@ -51,7 +51,7 @@ watch(isScrollbarAutoHide, () => {
 }
 .simplebar-scrollbar:before {
 	@apply w-3
-	rounded-sm bg-slate-300 dark:bg-slate-400
+	rounded-none bg-slate-300 dark:bg-slate-400
 	transition-all ease-in-out duration-300 delay-1000;
 }
 .simplebar-track.simplebar-hover .simplebar-scrollbar:before,

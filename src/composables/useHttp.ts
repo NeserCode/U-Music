@@ -37,8 +37,8 @@ export class NeteaseCloudMusicApiRequest {
 		let reqUrl = this.$uri + path
 		// Request Interception
 		this.$interceptors.request()
-		console.log("HTTP ST GET - ", reqUrl)
-		console.time(reqUrl)
+		console.log("HTTP ST GET - ", path)
+		console.time(path)
 		// Request
 		const response = await fetch<T>(reqUrl, {
 			...this.$Option,
@@ -47,7 +47,7 @@ export class NeteaseCloudMusicApiRequest {
 			query: { ...params },
 			responseType: ResponseType.JSON,
 		})
-		console.timeEnd(reqUrl)
+		console.timeEnd(path)
 		console.log("HTTP RC GET - ", response.status)
 
 		// Response Interception
@@ -60,8 +60,8 @@ export class NeteaseCloudMusicApiRequest {
 		let reqUrl = this.$uri + path
 		// Request Interception
 		this.$interceptors.request()
-		console.log("HTTP ST POST - ", reqUrl)
-		console.time(reqUrl)
+		console.log("HTTP ST POST - ", path)
+		console.time(path)
 		// Request
 		const response = await fetch<T>(reqUrl, {
 			...this.$Option,
@@ -70,7 +70,7 @@ export class NeteaseCloudMusicApiRequest {
 			body: Body.json({ ...params }),
 			responseType: ResponseType.JSON,
 		})
-		console.timeEnd(reqUrl)
+		console.timeEnd(path)
 		console.log("HTTP RC POST - ", response.status)
 
 		// Response Interception
