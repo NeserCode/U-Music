@@ -136,7 +136,7 @@ export interface RawSongSearchData {
 	cp: number
 	mv: number
 	publishTime: number
-	tns: any[]
+	tns?: any[]
 	privilege: RawSongPrivilegeData
 }
 

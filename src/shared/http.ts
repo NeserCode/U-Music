@@ -27,6 +27,7 @@ export interface Cookie {
 	Path?: string
 	Secure?: boolean
 	SameSite?: string
+	HttpOnly?: boolean
 
 	[key: string]: any
 }

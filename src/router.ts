@@ -14,6 +14,30 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {},
 		component: () => import("./views/Setting.vue"),
 	},
+	{
+		path: "/list/:hash",
+		name: "List",
+		meta: {},
+		component: () => import("./views/List.vue"),
+	},
+	{
+		path: "/artist/:id",
+		name: "Artist",
+		meta: {},
+		component: () => import("./views/Artist.vue"),
+	},
+	{
+		path: "/album/:id",
+		name: "Album",
+		meta: {},
+		component: () => import("./views/Album.vue"),
+	},
+	{
+		path: "/song",
+		name: "Song",
+		meta: {},
+		component: () => import("./views/Song.vue"),
+	},
 ]
 
 const router = createRouter({

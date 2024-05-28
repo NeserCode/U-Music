@@ -1,9 +1,9 @@
 import { fetch, Body, ResponseType } from "@tauri-apps/api/http"
 import type { FetchOptions } from "@tauri-apps/api/http"
 import type { RequestHeaders } from "@shared"
-import { CookieManager } from "./useCookie"
+import { useCookie } from "@composables/useCookie"
 
-// type Signal = AbortSignal
+const { stringToCookie, allCookies } = useCookie()
 
 export class NeteaseCloudMusicApiRequest {
 	private $headers: RequestHeaders = {
@@ -38,7 +38,7 @@ export class NeteaseCloudMusicApiRequest {
 		let reqUrl = this.$uri + path
 		// Request Interception
 		this.$interceptors.request()
-		console.log("HTTP ST GET - ", path)
+		console.log(`[HTTP ST GET] #${path}`)
 		console.time(path)
 		// Request
 		const response = await fetch<T>(reqUrl, {
@@ -49,11 +49,12 @@ export class NeteaseCloudMusicApiRequest {
 			responseType: ResponseType.JSON,
 		})
 		console.timeEnd(path)
-		console.log("HTTP RC GET - ", response.status)
+		console.log("[HTTP RC GET]", response.status)
+		console.log("[HTTP PARAMS GET]", params)
+		console.log("[HTTP RESPONSE GET]", response)
 
-		if (response.rawHeaders["set-cookie"]) {
-			// const res = CookieManager.anlyzeCookie(response.rawHeaders["set-cookie"])
-		}
+		if (response.headers["set-cookie"])
+			allCookies.value.push(stringToCookie([response.headers["set-cookie"]])[0])
 
 		// Response Interception
 		this.$interceptors.response()
@@ -65,7 +66,7 @@ export class NeteaseCloudMusicApiRequest {
 		let reqUrl = this.$uri + path
 		// Request Interception
 		this.$interceptors.request()
-		console.log("HTTP ST POST - ", path)
+		console.log(`[HTTP ST POST] #${path}`)
 		console.time(path)
 		// Request
 		const response = await fetch<T>(reqUrl, {
@@ -76,7 +77,9 @@ export class NeteaseCloudMusicApiRequest {
 			responseType: ResponseType.JSON,
 		})
 		console.timeEnd(path)
-		console.log("HTTP RC POST - ", response.status)
+		console.log("[HTTP RC POST]", response.status)
+		console.log("[HTTP PARAMS POST]", params)
+		console.log("[HTTP RESPONSE POST]", response)
 
 		// Response Interception
 		this.$interceptors.response()
