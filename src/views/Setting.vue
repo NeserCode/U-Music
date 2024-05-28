@@ -122,6 +122,7 @@ const { isScrollbarAutoHide } = useScrollbar()
 				<template #btn> 修改 </template>
 				<template #title> 修改接口地址 </template>
 				<template #content>
+					<span>修改后请重启本软件。</span>
 					<input
 						type="text"
 						v-model="appTempServer"

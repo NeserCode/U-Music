@@ -17,3 +17,16 @@ export interface RequestHeaders {
 	"sec-gpc"?: string
 	"user-agent"?: string
 }
+
+export interface Cookie {
+	name?: string
+	value?: string
+	"Max-Age"?: string
+	Expires?: string
+	Domain?: string
+	Path?: string
+	Secure?: boolean
+	SameSite?: string
+
+	[key: string]: any
+}

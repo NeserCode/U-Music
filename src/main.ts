@@ -5,7 +5,6 @@ import App from "@/App.vue"
 import router from "@/router"
 
 import NProgress from "nprogress"
-import "simplebar/dist/simplebar.css"
 import "nprogress/nprogress.css"
 
 NProgress.configure({

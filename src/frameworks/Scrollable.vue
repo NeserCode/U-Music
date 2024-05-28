@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useThrottleFn } from "@vueuse/core"
 import SimpleBar from "simplebar"
+import "simplebar/dist/simplebar.css"
 import { nextTick, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 import { useScrollbar } from "@composables/useScrollbar"
@@ -51,7 +52,7 @@ watch(isScrollbarAutoHide, () => {
 }
 .simplebar-scrollbar:before {
 	@apply w-3
-	rounded-none bg-slate-300 dark:bg-slate-400
+	rounded bg-slate-300 dark:bg-slate-400
 	transition-all ease-in-out duration-300 delay-1000;
 }
 .simplebar-track.simplebar-hover .simplebar-scrollbar:before,

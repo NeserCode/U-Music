@@ -1,6 +1,7 @@
 import NProgress from "nprogress"
 import { NeteaseCloudMusicApiRequest } from "@composables/useHttp"
 import { useServerConfig } from "@composables/useServerConfig"
+import { BaseParams, CountriesCodeSimpleReturn } from "@shared"
 
 const { server: appServer } = useServerConfig()
 const api = new NeteaseCloudMusicApiRequest({
@@ -20,7 +21,12 @@ api.setInterceptors("response")(() => {
 })
 
 export const useApi = () => {
-	const getCountriesCodeList = async () => await api.get("countries/code/list")
+	const getCountriesCodeList = async (params?: BaseParams) =>
+		await api.get<CountriesCodeSimpleReturn>(
+			"countries/code/list",
+			params ?? {}
+		)
+
 	return {
 		getCountriesCodeList,
 	}

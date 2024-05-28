@@ -48,9 +48,9 @@ import {
 }
 
 .request-snap {
-	@apply absolute left-8 w-20 inline-flex gap-1 items-center px-2.5
+	@apply absolute left-8 w-20 inline-flex gap-1 items-center px-3 py-0.5 pt-1
 	border-2 rounded border-slate-200 dark:border-slate-400
-	text-slate-600 dark:text-slate-300
+	text-sm text-slate-600 dark:text-slate-300
 	transition-all ease-in-out duration-300;
 }
 .request-snap:has(#nprogress) .icon {

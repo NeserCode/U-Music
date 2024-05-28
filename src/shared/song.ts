@@ -1,16 +1,16 @@
-interface RawArtistData {
+export interface RawArtistData {
 	id: number
 	name: string
 	tns: any[]
 	alias: any[]
 }
 
-interface RawSimpleArtistData {
+export interface RawSimpleArtistData {
 	id: number
 	name: string
 }
 
-interface RawAlbumData {
+export interface RawAlbumData {
 	id: number
 	name: string
 	picUrl: string
@@ -19,12 +19,12 @@ interface RawAlbumData {
 	pic: number
 }
 
-interface RawSimpleAlbumData {
+export interface RawSimpleAlbumData {
 	id: number
 	name: string
 }
 
-interface RawQualityData {
+export interface RawQualityData {
 	br: number
 	fid: number
 	size: number
@@ -32,14 +32,14 @@ interface RawQualityData {
 	sr: number
 }
 
-interface RawOriginSongSimpleData {
+export interface RawOriginSongSimpleData {
 	songId: number
 	name: string
 	artists: RawSimpleArtistData[]
 	albumMeta: RawSimpleAlbumData
 }
 
-interface RawFreeTrialPrivilegeData {
+export interface RawFreeTrialPrivilegeData {
 	resConsumable: boolean
 	userConsumable: boolean
 	listenType: any
@@ -47,21 +47,21 @@ interface RawFreeTrialPrivilegeData {
 	playReason?: any
 }
 
-interface RawFreeTimeTrialPrivilegeData {
+export interface RawFreeTimeTrialPrivilegeData {
 	resConsumable: boolean
 	userConsumable: boolean
 	type: number
 	remainTime: number
 }
 
-interface RawSongChargeInfo {
+export interface RawSongChargeInfo {
 	rate: number
 	chargeUrl: any
 	chargeType: number
 	chargeMessage: any
 }
 
-interface RawSongPrivilegeData {
+export interface RawSongPrivilegeData {
 	id: number
 	fee: number
 	payed: number
@@ -91,7 +91,7 @@ interface RawSongPrivilegeData {
 	chargeInfoList: RawSongChargeInfo[]
 }
 
-interface RawSongSearchData {
+export interface RawSongSearchData {
 	name: string
 	id: number
 	pst: number
@@ -140,7 +140,7 @@ interface RawSongSearchData {
 	privilege: RawSongPrivilegeData
 }
 
-interface RawSongData {
+export interface RawSongData {
 	id: number
 	url: string | null
 	br: number

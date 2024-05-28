@@ -1,6 +1,7 @@
 import { fetch, Body, ResponseType } from "@tauri-apps/api/http"
 import type { FetchOptions } from "@tauri-apps/api/http"
 import type { RequestHeaders } from "@shared"
+import { CookieManager } from "./useCookie"
 
 // type Signal = AbortSignal
 
@@ -49,6 +50,10 @@ export class NeteaseCloudMusicApiRequest {
 		})
 		console.timeEnd(path)
 		console.log("HTTP RC GET - ", response.status)
+
+		if (response.rawHeaders["set-cookie"]) {
+			// const res = CookieManager.anlyzeCookie(response.rawHeaders["set-cookie"])
+		}
 
 		// Response Interception
 		this.$interceptors.response()
