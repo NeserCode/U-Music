@@ -2,16 +2,11 @@
 import {
 	MusicalNoteIcon,
 	AdjustmentsHorizontalIcon,
-	GlobeAltIcon,
 } from "@heroicons/vue/24/solid"
 </script>
 
 <template>
 	<div class="app-top-links">
-		<span class="request-snap">
-			<GlobeAltIcon class="icon" />
-			<span class="text">NET</span>
-		</span>
 		<RouterLink draggable="false" class="link" to="/">
 			<MusicalNoteIcon class="icon" />
 			<span class="text">音乐</span>
@@ -45,15 +40,5 @@ import {
 
 .icon {
 	@apply md:w-4 md:h-4 lg:w-5 lg:h-5;
-}
-
-.request-snap {
-	@apply absolute left-8 w-20 inline-flex gap-1 items-center px-3 py-0.5 pt-1
-	border-2 rounded border-slate-200 dark:border-slate-400
-	text-sm text-slate-600 dark:text-slate-300
-	transition-all ease-in-out duration-300;
-}
-.request-snap:has(#nprogress) .icon {
-	@apply animate-pulse;
 }
 </style>

@@ -17,6 +17,7 @@
 		"nprogress": "^0.2.0",
 		"resize-observer-polyfill": "^1.5.1",
 		"simplebar": "^6.2.6",
+		"sqids": "^0.3.0",
 		"vue": "^3.3.4",
 		"vue-router": "4"
 	},

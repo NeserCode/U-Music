@@ -59,8 +59,9 @@ const { isScrollbarAutoHide } = useScrollbar()
 				</template>
 				<template #sr-only> Input Test Item </template>
 				<template #btn> 修改 </template>
-				<template #title> 修改本选项的提示 </template>
+				<template #title> 输入设置 </template>
 				<template #content>
+					<span> 修改本选项的提示 </span>
 					<input
 						type="text"
 						v-model="testTempInput"
@@ -80,7 +81,7 @@ const { isScrollbarAutoHide } = useScrollbar()
 					<span>圆角</span>
 				</template>
 				<template #tips>
-					<span>控制应用框架是否表现圆角。</span>
+					<span>控制应用视窗是否表现圆角。</span>
 				</template>
 				<template #sr-only> Application Rounded </template>
 			</SettingSwitchItem>
@@ -137,8 +138,8 @@ const { isScrollbarAutoHide } = useScrollbar()
 
 <style lang="postcss" scoped>
 .view-setting {
-	@apply w-full h-full flex flex-col items-center gap-1 md:px-24 lg:px-48
-	select-none;
+	@apply w-full h-full flex flex-col items-center gap-1 md:px-20 lg:px-40 py-8
+	select-none transition-all ease-in-out duration-300;
 }
 
 .setting-header {

@@ -9,11 +9,20 @@ import { useScrollbar } from "@composables/useScrollbar"
 const scrollbarRef = ref<SimpleBar | null>(null)
 const { isScrollbarAutoHide } = useScrollbar()
 
+const $props = withDefaults(
+	defineProps<{
+		el?: string
+	}>(),
+	{
+		el: "#context",
+	}
+)
+
 const initSimpleBar = useThrottleFn(() => {
 	setTimeout(() => {
 		nextTick(() => {
 			if (!document) throw Error("Scrollable cannot reach the document.")
-			let ctx = document.querySelector("#context") as HTMLDivElement
+			let ctx = document.querySelector($props.el) as HTMLDivElement
 			if (ctx)
 				scrollbarRef.value = new SimpleBar(ctx, {
 					autoHide: isScrollbarAutoHide.value,

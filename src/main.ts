@@ -11,7 +11,7 @@ NProgress.configure({
 	easing: "ease-in-out",
 	speed: 100,
 	showSpinner: false,
-	parent: ".request-snap",
+	parent: "#context",
 	trickleSpeed: 200,
 	minimum: 0.1,
 })
