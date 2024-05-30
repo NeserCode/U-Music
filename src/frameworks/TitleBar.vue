@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useDarkMode } from "@composables/useDarkMode"
 import { ref } from "vue"
-import { appWindow } from "@tauri-apps/api/window"
+import { useWindow } from "@composables/useWindow"
 
 import {
 	MinusIcon,
@@ -22,15 +22,16 @@ function removeMoveClass(event: MouseEvent) {
 	element.classList.remove("moving")
 }
 
-function minimize() {
+const { $window } = useWindow()
+async function minimize() {
 	if (!operations.value) return
 	let element = operations.value.querySelector(".minimize") as HTMLElement
 	element.classList.remove("moving")
-	appWindow.minimize()
+	await $window.minimize()
 }
 
 async function close() {
-	await appWindow.close()
+	await $window.close()
 }
 </script>
 
@@ -72,8 +73,6 @@ async function close() {
 <style lang="postcss" scoped>
 .app-title-bar {
 	@apply relative inline-flex items-center justify-end w-full h-8
-	border-b border-slate-300 dark:border-slate-600
-	bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-200
 	transition-all ease-in-out duration-300
   select-none;
 

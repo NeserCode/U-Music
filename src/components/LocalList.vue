@@ -1,17 +1,15 @@
 <script lang="ts" setup>
 import { CubeIcon, PhotoIcon } from "@heroicons/vue/24/solid"
-import { useKeyList, useLocalList, LocalList } from "@composables/useLocalList"
+import {
+	useKeyList,
+	useLocalList,
+	type LocalList,
+} from "@composables/useLocalList"
 import { onMounted, ref } from "vue"
 
 const LocalLists = ref<LocalList[]>([])
 
 onMounted(() => {
-	// const t2 = new LocalList("test2")
-	// t2.update("cover", `https://q1.qlogo.cn/g?b=qq&nk=2956456391&s=640`)
-	// console.log(t2)
-
-	// t2.create()
-
 	useKeyList().value.forEach((key) => {
 		const l = useLocalList(key)
 		if (l) LocalLists.value.push(l as any)

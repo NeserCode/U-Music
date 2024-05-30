@@ -26,7 +26,7 @@ const initSimpleBar = useThrottleFn(() => {
 			if (ctx)
 				scrollbarRef.value = new SimpleBar(ctx, {
 					autoHide: isScrollbarAutoHide.value,
-					clickOnTrack: true,
+					clickOnTrack: false,
 					scrollbarMaxSize: 240,
 				})
 			else throw Error("Scrollable cannot reach the content, view not found.")

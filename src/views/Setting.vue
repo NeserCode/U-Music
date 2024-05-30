@@ -5,6 +5,7 @@ import SettingInputItem from "@components/SettingInputItem.vue"
 import { useStorage } from "@vueuse/core"
 import { ref } from "vue"
 import { useAppRounded } from "@composables/useAppRounded"
+import { useWindow } from "@composables/useWindow"
 import { useDarkMode } from "@composables/useDarkMode"
 import { useScrollbar } from "@composables/useScrollbar"
 import { useServerConfig } from "@composables/useServerConfig"
@@ -33,6 +34,7 @@ function updateServer() {
 const { isRounded } = useAppRounded()
 const { isDarkMode } = useDarkMode()
 const { isScrollbarAutoHide } = useScrollbar()
+const { appAlwaysOnTop } = useWindow()
 </script>
 
 <template>
@@ -85,9 +87,18 @@ const { isScrollbarAutoHide } = useScrollbar()
 				</template>
 				<template #sr-only> Application Rounded </template>
 			</SettingSwitchItem>
+			<SettingSwitchItem v-model="appAlwaysOnTop">
+				<template #title>
+					<span>置顶</span>
+				</template>
+				<template #tips>
+					<span>控制应用视窗是否始终保持在最前。</span>
+				</template>
+				<template #sr-only> Application Always on Top </template>
+			</SettingSwitchItem>
 			<SettingSwitchItem v-model="isDarkMode">
 				<template #title>
-					<span>暗黑主题</span>
+					<span>遁入暗影</span>
 				</template>
 				<template #tips>
 					<span>控制应用框架是否切换到暗黑主题。</span>
@@ -96,7 +107,7 @@ const { isScrollbarAutoHide } = useScrollbar()
 			</SettingSwitchItem>
 			<SettingSwitchItem v-model="isScrollbarAutoHide">
 				<template #title>
-					<span>隐藏滚动条</span>
+					<span>无感滚动</span>
 				</template>
 				<template #tips>
 					<span>控制应用框架是否自动隐藏滚动条。</span>
@@ -138,7 +149,7 @@ const { isScrollbarAutoHide } = useScrollbar()
 
 <style lang="postcss" scoped>
 .view-setting {
-	@apply w-full h-full flex flex-col items-center gap-1 md:px-20 lg:px-40 py-8
+	@apply w-full h-full flex flex-col items-center gap-1 md:px-28 lg:px-40 py-8
 	select-none transition-all ease-in-out duration-300;
 }
 

@@ -3,10 +3,15 @@ import {
 	MusicalNoteIcon,
 	AdjustmentsHorizontalIcon,
 } from "@heroicons/vue/24/solid"
+import { computed } from "vue"
+import { useRoute } from "vue-router"
+
+const $route = useRoute()
+const isNeedHidden = computed(() => $route.meta.hideTopLinks)
 </script>
 
 <template>
-	<div class="app-top-links">
+	<div :class="['app-top-links', isNeedHidden ? 'need-hidden' : null]">
 		<RouterLink draggable="false" class="link" to="/">
 			<MusicalNoteIcon class="icon" />
 			<span class="text">音乐</span>
@@ -22,7 +27,10 @@ import {
 .app-top-links {
 	@apply relative w-full md:h-16 lg:h-24 flex justify-center items-center md:gap-4 lg:gap-8
 	border-b border-slate-200 dark:border-slate-500
-  select-none transition-colors ease-in-out duration-300;
+  select-none transition-all ease-in-out duration-300;
+}
+.app-top-links.need-hidden {
+	@apply opacity-0 h-0;
 }
 
 .app-top-links .link {

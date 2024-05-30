@@ -5,37 +5,49 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: "/",
 		name: "Home",
-		meta: {},
+		meta: {
+			hideTopLinks: false,
+		},
 		component: () => import("./views/Home.vue"),
 	},
 	{
 		path: "/setting",
 		name: "Setting",
-		meta: {},
+		meta: {
+			hideTopLinks: false,
+		},
 		component: () => import("./views/Setting.vue"),
 	},
 	{
 		path: "/list/:hash",
 		name: "List",
-		meta: {},
+		meta: {
+			hideTopLinks: false,
+		},
 		component: () => import("./views/List.vue"),
 	},
 	{
 		path: "/artist/:id",
 		name: "Artist",
-		meta: {},
+		meta: {
+			hideTopLinks: false,
+		},
 		component: () => import("./views/Artist.vue"),
 	},
 	{
 		path: "/album/:id",
 		name: "Album",
-		meta: {},
+		meta: {
+			hideTopLinks: false,
+		},
 		component: () => import("./views/Album.vue"),
 	},
 	{
 		path: "/song",
 		name: "Song",
-		meta: {},
+		meta: {
+			hideTopLinks: true,
+		},
 		component: () => import("./views/Song.vue"),
 	},
 ]
