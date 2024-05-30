@@ -11,12 +11,12 @@ onMounted(async () => {
 
 <template>
 	<div class="view-home">
-		<div class="links">
+		<!-- <div class="links">
 			<RouterLink to="/list/123">List</RouterLink>
 			<RouterLink to="/artist/123">Artist</RouterLink>
 			<RouterLink to="/album/123">Album</RouterLink>
 			<RouterLink to="/song">Song</RouterLink>
-		</div>
+		</div> -->
 		<LocalList />
 	</div>
 </template>

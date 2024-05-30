@@ -24,6 +24,7 @@ onMounted(() => {
 		<div class="local-list-header">
 			<CubeIcon class="icon" />
 			<span class="text">本地歌单</span>
+			<span class="list-count"> {{ LocalLists.length ?? 0 }} </span>
 		</div>
 		<div class="local-list-list" v-if="LocalLists.length > 0">
 			<div class="local-list" v-for="list of LocalLists" :key="list.hash!">
@@ -37,12 +38,12 @@ onMounted(() => {
 					<PhotoIcon v-else class="icon" />
 				</RouterLink>
 				<span class="info">
-					<RouterLink :to="`/list/${list.hash}`" class="title">{{
-						list.profile?.name
-					}}</RouterLink>
+					<RouterLink :to="`/list/${list.hash}`" class="title">
+						{{ list.profile?.name }}
+						<span class="songs-count">{{ list.songs?.length ?? 0 }}</span>
+					</RouterLink>
 					<span class="keys">{{ list.key }} {{ list.hash }}</span>
 				</span>
-				<span class="songs-count">{{ list.songs?.length ?? 0 }}</span>
 			</div>
 		</div>
 	</div>
@@ -57,12 +58,17 @@ onMounted(() => {
 	@apply flex items-center w-full gap-2 mb-4;
 }
 .local-list-header .icon {
-	@apply md:w-5 md:h-5 lg:w-6 lg:h-6
+	@apply md:w-6 md:h-6 lg:w-7 lg:h-7
   text-gray-500 dark:text-gray-200
   transition-colors ease-in-out duration-300;
 }
 .local-list-header .text {
-	@apply md:text-base lg:text-lg;
+	@apply md:text-lg lg:text-xl;
+}
+.local-list-header .list-count {
+	@apply inline-block
+	font-semibold text-sm opacity-50
+	transition-colors ease-in-out duration-300;
 }
 
 .local-list-list {
@@ -85,21 +91,17 @@ onMounted(() => {
 }
 
 .local-list .info {
-	@apply inline-flex flex-col justify-center
-  leading-3;
+	@apply inline-flex flex-col justify-center;
 }
 .info .title {
-	@apply inline-block md:w-28 lg:w-36 text-base
+	@apply inline-block md:w-28 lg:w-36 text-sm
   hover:text-green-600
   transition-colors ease-in-out duration-300;
 }
 .info .keys {
 	@apply text-xs opacity-50 transform -translate-y-0.5;
 }
-
-.local-list .songs-count {
-	@apply absolute top-0 right-2 inline-flex justify-center items-center w-5 h-5
-  rounded-full text-xs bg-slate-300 dark:bg-slate-500
-  transition-colors ease-in-out duration-300;
+.info .songs-count {
+	@apply text-xs opacity-50;
 }
 </style>
