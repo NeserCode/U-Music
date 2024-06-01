@@ -80,7 +80,6 @@ onMounted(() => {
 .local-list .cover {
 	@apply w-full md:h-28 lg:h-36 overflow-hidden flex items-center justify-center
   border-2 rounded border-slate-300 dark:border-slate-500
-  hover:border-green-600 dark:hover:border-green-600
   transition-all ease-in-out duration-300 cursor-pointer;
 }
 .local-list .cover img {
@@ -95,7 +94,6 @@ onMounted(() => {
 }
 .info .title {
 	@apply inline-block md:w-28 lg:w-36 text-sm
-  hover:text-green-600
   transition-colors ease-in-out duration-300;
 }
 .info .keys {
@@ -103,5 +101,10 @@ onMounted(() => {
 }
 .info .songs-count {
 	@apply text-xs opacity-50;
+}
+
+.local-list:hover .cover,
+.local-list:hover .info .title {
+	@apply text-green-500 border-green-500;
 }
 </style>
