@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { CubeIcon, PhotoIcon } from "@heroicons/vue/24/solid"
+import Pagination from "@components/Pagination.vue"
+import { PhotoIcon } from "@heroicons/vue/24/solid"
 import {
 	useKeyList,
 	useLocalList,
@@ -7,13 +8,22 @@ import {
 } from "@composables/useLocalList"
 import { onMounted, ref } from "vue"
 
+import type { PaginationPages } from "@shared"
+
 const LocalLists = ref<LocalList[]>([])
+const LocalListPages = ref<PaginationPages>({
+	total: 0,
+	offset: 1,
+	limit: 10,
+})
 
 onMounted(() => {
 	useKeyList().value.forEach((key) => {
 		const l = useLocalList(key)
 		if (l) LocalLists.value.push(l as any)
 	})
+
+	LocalListPages.value.total = LocalLists.value.length
 
 	console.log(LocalLists.value)
 })
@@ -22,8 +32,7 @@ onMounted(() => {
 <template>
 	<div class="local-list-main" ondragstart="javascript:return false">
 		<div class="local-list-header">
-			<CubeIcon class="icon" />
-			<span class="text">本地歌单</span>
+			<span class="text">歌单</span>
 			<span class="list-count"> {{ LocalLists.length ?? 0 }} </span>
 		</div>
 		<div class="local-list-list" v-if="LocalLists.length > 0">
@@ -46,6 +55,7 @@ onMounted(() => {
 				</span>
 			</div>
 		</div>
+		<Pagination :pages="LocalListPages" />
 	</div>
 </template>
 

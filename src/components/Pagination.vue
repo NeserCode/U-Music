@@ -1,9 +1,19 @@
 <script lang="ts" setup>
-const $props = withDefaults(defineProps<{}>(), {})
+import type { PaginationProps } from "@shared"
+
+const $props = withDefaults(defineProps<PaginationProps>(), {
+	pages: () => ({
+		total: 0,
+		offset: 1,
+		limit: 10,
+	}),
+})
 </script>
 
 <template>
-	<div class="pagination-main"></div>
+	<div class="pagination-main">
+		{{ pages }}
+	</div>
 </template>
 
 <style lang="postcss" scoped></style>
