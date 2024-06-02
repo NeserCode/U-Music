@@ -1,6 +1,6 @@
 import { useStorage } from "@vueuse/core"
 import Sqids from "sqids"
-import { Ref } from "vue"
+import { computed, type Ref } from "vue"
 
 import { useConstant } from "@composables/useConstant"
 import type { ListProfile } from "@shared"
@@ -68,6 +68,17 @@ export function useLocalList(key: string) {
 	const hash = localStorage.getItem(`local-list-hash-${key}`) ?? ""
 	if (!LocalList.exists(hash)) return
 	return new LocalList(key)
+}
+
+export function useLocalLists() {
+	return computed(() => {
+		const lists: LocalList[] = []
+		localKeyList.value.forEach((key) => {
+			const l = useLocalList(key)
+			if (l) lists.push(l as LocalList)
+		})
+		return lists
+	})
 }
 
 export const useHashList = () => localHashList

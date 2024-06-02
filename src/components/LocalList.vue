@@ -1,31 +1,30 @@
 <script lang="ts" setup>
 import Pagination from "@components/Pagination.vue"
 import { PhotoIcon } from "@heroicons/vue/24/solid"
-import {
-	useKeyList,
-	useLocalList,
-	type LocalList,
-} from "@composables/useLocalList"
-import { onMounted, ref } from "vue"
+import { LocalList, useLocalLists } from "@composables/useLocalList"
+import { onMounted, watch, ref, Ref } from "vue"
 
 import type { PaginationPages } from "@shared"
 
-const LocalLists = ref<LocalList[]>([])
-const LocalListPages = ref<PaginationPages>({
+const localLists: Ref<LocalList[]> = ref([])
+const computedLists = useLocalLists()
+const localListPages = ref<PaginationPages>({
 	total: 0,
 	offset: 1,
 	limit: 10,
 })
 
 onMounted(() => {
-	useKeyList().value.forEach((key) => {
-		const l = useLocalList(key)
-		if (l) LocalLists.value.push(l as any)
-	})
+	watch(
+		computedLists,
+		(lists) => {
+			localLists.value = lists
+			localListPages.value.total = localLists.value.length
 
-	LocalListPages.value.total = LocalLists.value.length
-
-	console.log(LocalLists.value)
+			console.log(lists)
+		},
+		{ immediate: true }
+	)
 })
 </script>
 
@@ -33,10 +32,10 @@ onMounted(() => {
 	<div class="local-list-main" ondragstart="javascript:return false">
 		<div class="local-list-header">
 			<span class="text">歌单</span>
-			<span class="list-count"> {{ LocalLists.length ?? 0 }} </span>
+			<span class="list-count"> {{ localLists.length ?? 0 }} </span>
 		</div>
-		<div class="local-list-list" v-if="LocalLists.length > 0">
-			<div class="local-list" v-for="list of LocalLists" :key="list.hash!">
+		<div class="local-list-list" v-if="localLists.length > 0">
+			<div class="local-list" v-for="list of localLists" :key="list.hash!">
 				<RouterLink class="cover" :to="`/list/${list.hash}`">
 					<img
 						v-if="list.profile?.cover"
@@ -55,7 +54,7 @@ onMounted(() => {
 				</span>
 			</div>
 		</div>
-		<Pagination :pages="LocalListPages" />
+		<Pagination :pages="localListPages" />
 	</div>
 </template>
 
