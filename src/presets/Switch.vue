@@ -42,7 +42,7 @@ const cssDisabled = computed(() => {
 
 <style lang="postcss">
 .switch-main {
-	@apply relative h-6 w-12 inline-flex shrink-0
+	@apply relative h-7 w-12 inline-flex shrink-0
   rounded-full border-2 border-transparent bg-teal-600
   transition-all ease-in-out duration-300
   outline-none focus-visible:ring-2 focus-visible:ring-white/75;
@@ -55,12 +55,16 @@ const cssDisabled = computed(() => {
 }
 
 .switch-handle {
-	@apply pointer-events-none  w-5 h-5
-	inline-block transform translate-x-0
+	@apply pointer-events-none w-4 h-4
+	inline-block transform translate-x-1 translate-y-1
 	rounded-full bg-white shadow-lg ring-0 outline-none
 	transition ease-in-out duration-300;
 }
 .switch-handle.enabled {
 	@apply translate-x-6;
+}
+
+.switch-main:hover .switch-handle {
+	@apply scale-125;
 }
 </style>

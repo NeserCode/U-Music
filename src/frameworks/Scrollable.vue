@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useThrottleFn } from "@vueuse/core"
+import { useIntervalFn } from "@vueuse/core"
 import SimpleBar from "simplebar"
 import "simplebar/dist/simplebar.css"
 import { nextTick, ref, watch } from "vue"
@@ -18,34 +18,33 @@ const $props = withDefaults(
 	}
 )
 
-const initSimpleBar = useThrottleFn(() => {
-	setTimeout(() => {
-		nextTick(() => {
-			if (!document) throw Error("Scrollable cannot reach the document.")
-			let ctx = document.querySelector($props.el) as HTMLDivElement
-			if (ctx)
-				scrollbarRef.value = new SimpleBar(ctx, {
-					autoHide: isScrollbarAutoHide.value,
-					clickOnTrack: false,
-					scrollbarMaxSize: 240,
-				})
-			else throw Error("Scrollable cannot reach the content, view not found.")
+const initSimpleBar = useIntervalFn(() => {
+	nextTick(() => {
+		if (!document) throw Error("Scrollable cannot reach the document.")
+		let ctx = document.querySelector($props.el) as HTMLDivElement
+		if (ctx)
+			scrollbarRef.value = new SimpleBar(ctx, {
+				autoHide: isScrollbarAutoHide.value,
+				clickOnTrack: false,
+				scrollbarMaxSize: 240,
+			})
+		else throw Error("Scrollable cannot reach the content, view not found.")
 
-			scrollbarRef.value.init()
-		})
-	}, 500)
-}, 300)
+		scrollbarRef.value.init()
+		initSimpleBar.pause()
+	})
+}, 500)
 
 const $route = useRoute()
 watch(
 	() => $route.fullPath,
 	() => {
-		initSimpleBar()
+		initSimpleBar.resume()
 	},
 	{ immediate: true }
 )
 watch(isScrollbarAutoHide, () => {
-	initSimpleBar()
+	initSimpleBar.resume()
 })
 </script>
 

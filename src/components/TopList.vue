@@ -9,7 +9,7 @@ import type { PaginationPages } from "@shared"
 const { $topLists } = useValues()
 const topListPages = ref<PaginationPages>({
 	total: 0,
-	offset: 4,
+	offset: 0,
 	limit: 10,
 })
 const topLists = computed(() => $topLists.value.list)
@@ -20,6 +20,25 @@ watch(
 	},
 	{ immediate: true }
 )
+
+const computedTopLists = computed(() => {
+	const { offset, limit } = topListPages.value
+	return topLists.value.slice(offset, offset + limit)
+})
+const topListPageChanges = {
+	prev: () => {
+		if (topListPages.value.offset === 0) return
+		topListPages.value.offset -= topListPages.value.limit
+	},
+	next: () => {
+		if (
+			topListPages.value.offset + topListPages.value.limit >=
+			topListPages.value.total
+		)
+			return
+		topListPages.value.offset += topListPages.value.limit
+	},
+}
 </script>
 
 <template>
@@ -29,7 +48,7 @@ watch(
 			<span class="list-count"> {{ topLists.length ?? 0 }} </span>
 		</div>
 		<div class="top-list-list" v-if="topLists.length > 0">
-			<div class="top-list" v-for="list of topLists" :key="list.id">
+			<div class="top-list" v-for="list of computedTopLists" :key="list.id">
 				<RouterLink class="cover" :to="`/list/${list.id}`">
 					<img
 						v-if="list.coverImgUrl"
@@ -47,7 +66,7 @@ watch(
 				</span>
 			</div>
 		</div>
-		<Pagination :pages="topListPages" />
+		<Pagination :pages="topListPages" :changes="topListPageChanges" />
 	</div>
 </template>
 
