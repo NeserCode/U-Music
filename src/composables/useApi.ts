@@ -1,7 +1,11 @@
 import NProgress from "nprogress"
 import { NeteaseCloudMusicApiRequest } from "@composables/useHttp"
 import { useServerConfig } from "@composables/useServerConfig"
-import { BaseParams, CountriesCodeSimpleReturn } from "@shared"
+import {
+	BaseParams,
+	CountriesCodeSimpleReturn,
+	TopListSimpleReturn,
+} from "@shared"
 
 const { server: appServer } = useServerConfig()
 const api = new NeteaseCloudMusicApiRequest({
@@ -27,7 +31,11 @@ export const useApi = () => {
 			params ?? {}
 		)
 
+	const getTopLists = async (params?: BaseParams) =>
+		await api.get<TopListSimpleReturn>("toplist", params ?? {})
+
 	return {
 		getCountriesCodeList,
+		getTopLists,
 	}
 }

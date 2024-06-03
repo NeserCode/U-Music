@@ -42,6 +42,7 @@ onMounted(() => {
 						:src="list.profile?.cover"
 						referrerpolicy="no-referrer"
 						alt="Cover"
+						lazy
 					/>
 					<PhotoIcon v-else class="icon" />
 				</RouterLink>

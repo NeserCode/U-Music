@@ -1,10 +1,10 @@
 import { useDebounceFn, useStorage } from "@vueuse/core"
-import { CountriesCodeSimpleReturn } from "@shared"
+import { CountriesCodeSimpleReturn, TopListSimpleReturn } from "@shared"
 import { useApi } from "@composables/useApi"
 import { useCookie } from "@composables/useCookie"
 import { computed } from "vue"
 
-const { getCountriesCodeList } = useApi()
+const { getCountriesCodeList, getTopLists } = useApi()
 const { allCookies: cookies, cookieToString } = useCookie()
 
 const cookie = computed(() => {
@@ -33,7 +33,24 @@ const countriesCodeListUpdater = useDebounceFn(async () => {
 	return $countriesCodeList
 }, 500)
 
+const $topLists = useStorage<TopListSimpleReturn>("top-lists", {
+	code: -1,
+	list: [],
+	artistToplist: [],
+})
+const topListsUpdater = useDebounceFn(async () => {
+	if ($topLists.value.code !== 200 || $topLists.value.list.length === 0) {
+		$topLists.value = (
+			await getTopLists({
+				cookie: cookie.value,
+			})
+		).data
+	}
+})
+
 export const useValues = () => ({
 	$countriesCodeList,
 	countriesCodeListUpdater,
+	$topLists,
+	topListsUpdater,
 })

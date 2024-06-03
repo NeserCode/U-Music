@@ -168,3 +168,41 @@ export interface RawSongData {
 	effectTypes: any
 	time: number
 }
+
+export interface SongSimpleProfile {
+	name: string
+	fee: number
+	alia?: any[]
+	tns?: any[]
+	publishTime: number
+	version: number
+}
+
+export interface SongSearchData {
+	id: number
+	profile: SongSimpleProfile
+	artists: RawArtistData[]
+	album: RawAlbumData | null
+	originSong: RawOriginSongSimpleData | null
+	privilege: RawSongPrivilegeData
+	$raw: RawSongSearchData
+}
+
+export interface SongData {
+	id: number
+	profile: SongSimpleProfile
+	time: number
+	expi: number
+	source: {
+		url: string | null
+		md5: string | null
+		size: number
+		urlSource: number
+		rightSource: number
+	}
+	privileges: {
+		freeTrialPrivilege: RawFreeTrialPrivilegeData
+		freeTimeTrialPrivilege: RawFreeTimeTrialPrivilegeData
+	}
+	$raw: RawSongData
+}

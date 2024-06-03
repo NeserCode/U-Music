@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import LocalList from "@components/LocalList.vue"
+import TopList from "@/components/TopList.vue"
 import { useValues } from "@composables/useValues"
 import { onMounted } from "vue"
 
-const { countriesCodeListUpdater } = useValues()
+const { countriesCodeListUpdater, topListsUpdater } = useValues()
 onMounted(async () => {
 	await countriesCodeListUpdater()
+	await topListsUpdater()
 })
 </script>
 
@@ -18,6 +20,7 @@ onMounted(async () => {
 			<RouterLink to="/song">Song</RouterLink>
 		</div> -->
 		<LocalList />
+		<TopList />
 	</div>
 </template>
 

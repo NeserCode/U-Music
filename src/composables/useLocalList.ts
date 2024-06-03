@@ -75,7 +75,7 @@ export function useLocalLists() {
 		const lists: LocalList[] = []
 		localKeyList.value.forEach((key) => {
 			const l = useLocalList(key)
-			if (l) lists.push(l as LocalList)
+			if (l) lists.push(l)
 		})
 		return lists
 	})
