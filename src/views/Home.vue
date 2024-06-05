@@ -27,7 +27,7 @@ onMounted(async () => {
 <style lang="postcss" scoped>
 .view-home {
 	@apply h-screen flex gap-1 md:p-4 lg:p-8
-	select-none transition-all ease-in-out duration-300;
+	select-none transition-colors ease-in-out duration-300;
 }
 .links {
 	@apply w-full inline-flex justify-center items-center gap-2 py-2;

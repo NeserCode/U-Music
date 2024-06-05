@@ -2,6 +2,7 @@
 import Pagination from "@components/Pagination.vue"
 import { PhotoIcon } from "@heroicons/vue/24/solid"
 import { LocalList, useLocalLists } from "@composables/useLocalList"
+import { usePaginationChanges } from "@composables/useComponentsUtils"
 import { onMounted, watch, ref, Ref } from "vue"
 
 import type { PaginationPages } from "@shared"
@@ -10,9 +11,10 @@ const localLists: Ref<LocalList[]> = ref([])
 const computedLists = useLocalLists()
 const localListPages = ref<PaginationPages>({
 	total: 0,
-	offset: 1,
+	offset: 0,
 	limit: 10,
 })
+const localListChanges = usePaginationChanges(localListPages)
 
 onMounted(() => {
 	watch(
@@ -55,7 +57,7 @@ onMounted(() => {
 				</span>
 			</div>
 		</div>
-		<Pagination :pages="localListPages" />
+		<Pagination :pages="localListPages" :changes="localListChanges" />
 	</div>
 </template>
 

@@ -3,6 +3,7 @@ import Pagination from "@components/Pagination.vue"
 import { PhotoIcon } from "@heroicons/vue/24/solid"
 import { computed, watch, ref } from "vue"
 import { useValues } from "@composables/useValues"
+import { usePaginationChanges } from "@composables/useComponentsUtils"
 
 import type { PaginationPages } from "@shared"
 
@@ -25,20 +26,7 @@ const computedTopLists = computed(() => {
 	const { offset, limit } = topListPages.value
 	return topLists.value.slice(offset, offset + limit)
 })
-const topListPageChanges = {
-	prev: () => {
-		if (topListPages.value.offset === 0) return
-		topListPages.value.offset -= topListPages.value.limit
-	},
-	next: () => {
-		if (
-			topListPages.value.offset + topListPages.value.limit >=
-			topListPages.value.total
-		)
-			return
-		topListPages.value.offset += topListPages.value.limit
-	},
-}
+const topListPageChanges = usePaginationChanges(topListPages)
 </script>
 
 <template>

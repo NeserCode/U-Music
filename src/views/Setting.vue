@@ -150,7 +150,7 @@ const { appAlwaysOnTop } = useWindow()
 <style lang="postcss" scoped>
 .view-setting {
 	@apply w-full h-full flex flex-col items-center gap-1 md:px-28 lg:px-40 py-8
-	select-none transition-all ease-in-out duration-300;
+	select-none transition-colors ease-in-out duration-300;
 }
 
 .setting-header {

@@ -7,7 +7,9 @@ export interface PaginationPages {
 export interface PaginationChanges {
 	prev: () => void
 	next: () => void
-	page?: (page: number) => void
+	page: (page: number) => void
+	top: () => void
+	bottom: () => void
 }
 
 export interface PaginationProps {
