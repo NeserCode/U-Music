@@ -33,6 +33,26 @@ const currentPage = computed(() => {
 	if (!!changes.value.page) changes.value.page(current)
 	return current
 })
+const shownPages = computed(() => {
+	if (totalPage.value <= 5) return totalPage.value
+	return currentPage.value <= 3
+		? [1, 2, 3, 4, 5]
+		: currentPage.value >= totalPage.value - 2
+		? [
+				totalPage.value - 4,
+				totalPage.value - 3,
+				totalPage.value - 2,
+				totalPage.value - 1,
+				totalPage.value,
+		  ]
+		: [
+				currentPage.value - 1,
+				currentPage.value,
+				currentPage.value + 1,
+				currentPage.value + 2,
+				currentPage.value + 3,
+		  ]
+})
 
 const disabledSet = computed(() => {
 	const { offset, limit, total } = pages.value
@@ -51,11 +71,17 @@ const nextFn = useThrottleFn(() => {
 	changes.value.next()
 }, 500)
 const topFn = useThrottleFn(() => {
-	if (!!changes.value.top) changes.value.top()
+	changes.value.top()
 }, 500)
 const bottomFn = useThrottleFn(() => {
-	if (!!changes.value.bottom) changes.value.bottom()
+	changes.value.bottom()
 }, 500)
+const pageFn = useThrottleFn((page: number) => {
+	if (currentPage.value !== page) changes.value.page(page)
+}, 500)
+
+const matchClass = (page: number) =>
+	page === currentPage.value ? "curr" : null
 </script>
 
 <template>
@@ -78,7 +104,15 @@ const bottomFn = useThrottleFn(() => {
 		>
 			<ChevronLeftIcon class="icon" />
 		</button>
-		<span class="text">{{ currentPage }}/{{ totalPage }}</span>
+		<button
+			class="page btn"
+			:class="matchClass(page)"
+			v-for="page in shownPages"
+			:key="page"
+			@click="pageFn(page)"
+		>
+			{{ page }}
+		</button>
 		<button
 			class="next btn"
 			:class="{ 'btn-disabled': disabledSet.next }"
@@ -102,7 +136,7 @@ const bottomFn = useThrottleFn(() => {
 
 <style lang="postcss" scoped>
 .pagination-main {
-	@apply w-full flex items-center justify-center gap-2 py-2;
+	@apply w-full flex items-center justify-center gap-2 py-4;
 }
 
 .pagination-main .btn {
@@ -120,5 +154,13 @@ const bottomFn = useThrottleFn(() => {
 }
 .text {
 	@apply text-sm;
+}
+
+.pagination-main .page.btn {
+	@apply py-0.5 px-2
+	text-sm rounded;
+}
+.page.btn.curr {
+	@apply bg-green-300 dark:bg-green-600;
 }
 </style>

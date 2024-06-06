@@ -191,6 +191,9 @@ export interface SongSearchData {
 export interface SongData {
 	id: number
 	profile: SongSimpleProfile
+	artists: RawArtistData[]
+	album: RawAlbumData | null
+	originSong: RawOriginSongSimpleData | null
 	time: number
 	expi: number
 	source: {

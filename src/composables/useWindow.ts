@@ -22,5 +22,15 @@ export const useWindow = () => {
 				},
 			}
 		),
+		nextTickToShow: () => {
+			setTimeout(async () => {
+				await appWindow.show()
+			}, 0)
+		},
+		nextTickToHide: () => {
+			setTimeout(async () => {
+				await appWindow.hide()
+			}, 0)
+		},
 	}
 }

@@ -1,9 +1,9 @@
 import { useStorage } from "@vueuse/core"
 import Sqids from "sqids"
-import { computed, type Ref } from "vue"
+import { computed } from "vue"
 
 import { useConstant } from "@composables/useConstant"
-import type { ListProfile } from "@shared"
+import type { ListProfile, SongData } from "@shared"
 
 const { defaults } = useConstant()
 const sqids = new Sqids()
@@ -11,48 +11,48 @@ const localHashList = useStorage<string[]>("local-hash-list", [])
 const localKeyList = useStorage<string[]>("local-key-list", [])
 
 export class LocalList {
-	public hash: Ref<string | null>
+	public hash: string | null
 	public key: string
-	public profile: Ref<ListProfile | null>
-	public songs: Ref<any[] | null>
+	public profile: ListProfile | null
+	public songs: SongData[]
 
 	constructor(key: string) {
 		this.key = key
 		this.hash = useStorage(
 			`local-list-hash-${this.key}`,
 			sqids.encode([Math.floor(Math.random() * 10000)])
-		)
-		this.songs = useStorage(`local-list-songs-${this.key}`, [])
+		).value
+		this.songs = useStorage(`local-list-songs-${this.key}`, []).value
 		this.profile = useStorage(
 			`local-list-profile-${this.key}`,
 			defaults.listProfile
-		)
+		).value
 	}
 
 	create(profile?: ListProfile) {
-		if (LocalList.exists(this.hash.value!)) return
+		if (LocalList.exists(this.hash!)) return
 		else if (!!profile)
-			this.profile.value = Object.assign(this.profile.value ?? {}, profile)
-		localHashList.value.push(this.hash.value!)
+			this.profile = Object.assign(this.profile ?? {}, profile)
+		localHashList.value.push(this.hash!)
 		localKeyList.value.push(this.key)
 	}
 
-	update(type: "cover" | "name" | "description", param: any) {
-		if (!!type && !!param) this.profile.value![type] = param
+	update(type: "cover" | "name" | "description", param: string) {
+		if (!!type && !!param) this.profile![type] = param
 		localStorage.setItem(
 			`local-list-profile-${this.key}`,
-			JSON.stringify(this.profile.value!)
+			JSON.stringify(this.profile)
 		)
 	}
 
 	remove() {
 		localHashList.value = localHashList.value.filter(
-			(hash) => hash !== this.hash.value
+			(hash) => hash !== this.hash
 		)
 		localKeyList.value = localKeyList.value.filter((key) => key !== this.key)
-		this.songs.value = null
-		this.profile.value = null
-		this.hash.value = null
+		this.songs = []
+		this.profile = null
+		this.hash = null
 
 		localStorage.removeItem(`local-list-hash-${this.key}`)
 		localStorage.removeItem(`local-list-songs-${this.key}`)

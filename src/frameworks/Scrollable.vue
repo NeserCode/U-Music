@@ -5,6 +5,7 @@ import "simplebar/dist/simplebar.css"
 import { nextTick, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 import { useScrollbar } from "@composables/useScrollbar"
+import { useWindow } from "@composables/useWindow"
 
 const scrollbarRef = ref<SimpleBar | null>(null)
 const { isScrollbarAutoHide } = useScrollbar()
@@ -18,6 +19,7 @@ const $props = withDefaults(
 	}
 )
 
+const { nextTickToShow } = useWindow()
 const initSimpleBar = useIntervalFn(() => {
 	nextTick(() => {
 		if (!document) throw Error("Scrollable cannot reach the document.")
@@ -32,6 +34,7 @@ const initSimpleBar = useIntervalFn(() => {
 
 		scrollbarRef.value.init()
 		initSimpleBar.pause()
+		setTimeout(nextTickToShow, 100)
 	})
 }, 500)
 
