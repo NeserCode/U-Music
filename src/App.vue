@@ -26,7 +26,7 @@ onMounted(() => {
 		<router-view id="context" v-slot="{ Component }">
 			<Scrollable>
 				<Transition name="view" mode="out-in" :appear="true">
-					<keep-alive :include="['Home', 'Setting']">
+					<keep-alive :include="['Home', 'List', 'Setting']">
 						<component ref="view" :is="Component" :key="$route.fullPath" />
 					</keep-alive>
 				</Transition>
