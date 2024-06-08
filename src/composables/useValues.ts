@@ -29,7 +29,7 @@ const countriesCodeListUpdater = useDebounceFn(async () => {
 			await getCountriesCodeList({
 				cookie: cookie.value,
 			})
-		).data.data
+		)?.data.data
 	}
 
 	return $countriesCodeList
@@ -48,11 +48,11 @@ const topListsUpdater = useDebounceFn(async () => {
 			await getTopLists({
 				cookie: cookie.value,
 			})
-		).data
+		)?.data
 	}
-	if ($topLists.value.code !== 200 || $topLists.value.list.length === 0) {
+	if ($topLists.value.code !== 200 || $topLists.value.list.length === 0)
 		await update()
-	} else {
+	else {
 		let latest = $topLists.value.list[0].updateTime
 		let now = new Date().getTime()
 		for (const i of $topLists.value.list)
@@ -61,6 +61,9 @@ const topListsUpdater = useDebounceFn(async () => {
 		if (now - latest > 1000 * 60 * 60 * 24) await update()
 	}
 })
+
+// 歌单
+// const $playList
 
 export const useValues = () => ({
 	$countriesCodeList,

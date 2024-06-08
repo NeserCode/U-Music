@@ -4,6 +4,7 @@ import { useServerConfig } from "@composables/useServerConfig"
 import {
 	BaseParams,
 	CountriesCodeSimpleReturn,
+	SimpleIDParams,
 	TopListSimpleReturn,
 } from "@shared"
 
@@ -34,8 +35,12 @@ export const useApi = () => {
 	const getTopLists = async (params?: BaseParams) =>
 		await api.get<TopListSimpleReturn>("toplist", params ?? {})
 
+	const getSongList = async (params: SimpleIDParams) =>
+		await api.get<any>("playlist/detail", params)
+
 	return {
 		getCountriesCodeList,
 		getTopLists,
+		getSongList,
 	}
 }

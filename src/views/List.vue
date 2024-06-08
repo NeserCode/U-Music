@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { useRoute } from "vue-router"
-import { computed } from "vue"
+import { computed, onMounted, ref } from "vue"
 import { useValues } from "@composables/useValues"
+import { useApi } from "@composables/useApi"
 
 const { params } = useRoute()
 const { hash: rawId } = params
@@ -18,7 +19,13 @@ const listData = computed(
 		]
 )
 
-console.log(listData.value)
+const listSongData = ref()
+onMounted(async () => {
+	const { getSongList } = useApi()
+	const data = await getSongList({ id: rawId as string })
+	listSongData.value = data
+	console.log(data)
+})
 </script>
 
 <template>

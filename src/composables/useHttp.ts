@@ -38,7 +38,7 @@ export class NeteaseCloudMusicApiRequest {
 		let reqUrl = this.$uri + path
 		// Request Interception
 		this.$interceptors.request()
-		console.log(`[HTTP ST GET] #${path}`)
+		console.log(`[HTTP ST GET] #${path}`, params)
 		console.time(path)
 		// Request
 		const response = await fetch<T>(reqUrl, {
@@ -47,13 +47,14 @@ export class NeteaseCloudMusicApiRequest {
 			headers: this.$headers,
 			query: { ...params },
 			responseType: ResponseType.JSON,
+		}).catch((e) => {
+			console.log("[HTTP ERROR]", e)
 		})
 		console.timeEnd(path)
-		console.log("[HTTP RC GET]", response.status)
-		console.log("[HTTP PARAMS GET]", params)
+		console.log("[HTTP RC GET]", response?.status)
 		console.log("[HTTP RESPONSE GET]", response)
 
-		if (response.headers["set-cookie"])
+		if (response?.headers["set-cookie"])
 			allCookies.value.push(stringToCookie([response.headers["set-cookie"]])[0])
 
 		// Response Interception
@@ -75,10 +76,11 @@ export class NeteaseCloudMusicApiRequest {
 			headers: this.$headers,
 			body: Body.json({ ...params }),
 			responseType: ResponseType.JSON,
+		}).catch((e) => {
+			console.log("[HTTP ERROR]", e)
 		})
 		console.timeEnd(path)
-		console.log("[HTTP RC POST]", response.status)
-		console.log("[HTTP PARAMS POST]", params)
+		console.log("[HTTP RC POST]", response?.status)
 		console.log("[HTTP RESPONSE POST]", response)
 
 		// Response Interception
