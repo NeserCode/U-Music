@@ -57,7 +57,17 @@ onMounted(() => {
 				</span>
 			</div>
 		</div>
-		<Pagination :pages="localListPages" :changes="localListChanges" />
+		<Pagination
+			:pages="localListPages"
+			v-if="localLists.length > 0"
+			:changes="localListChanges"
+		/>
+		<div
+			class="local-list-placeholder local-list-list"
+			v-if="localLists.length === 0"
+		>
+			<span> Nothing Here </span>
+		</div>
 	</div>
 </template>
 
@@ -118,5 +128,10 @@ onMounted(() => {
 .local-list:hover .cover,
 .local-list:hover .info .title {
 	@apply text-green-500 border-green-500;
+}
+
+.local-list-placeholder {
+	@apply inline-block px-8 pb-4
+	font-black opacity-40;
 }
 </style>

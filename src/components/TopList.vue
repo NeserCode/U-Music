@@ -13,7 +13,7 @@ const topListPages = ref<PaginationPages>({
 	offset: 0,
 	limit: 10,
 })
-const topLists = computed(() => $topLists.value.list)
+const topLists = computed(() => ($topLists.value ? $topLists.value.list : []))
 watch(
 	topLists,
 	() => {
@@ -54,7 +54,17 @@ const topListPageChanges = usePaginationChanges(topListPages)
 				</span>
 			</div>
 		</div>
-		<Pagination :pages="topListPages" :changes="topListPageChanges" />
+		<Pagination
+			:pages="topListPages"
+			:changes="topListPageChanges"
+			v-if="topLists.length > 0"
+		/>
+		<div
+			class="top-list-placeholder top-list-list"
+			v-if="topLists.length === 0"
+		>
+			<span> Nothing Here </span>
+		</div>
 	</div>
 </template>
 
@@ -112,5 +122,10 @@ const topListPageChanges = usePaginationChanges(topListPages)
 .top-list:hover .cover,
 .top-list:hover .info .title {
 	@apply text-green-500 border-green-500;
+}
+
+.top-list-placeholder {
+	@apply inline-block px-8 pb-4
+	font-black opacity-40;
 }
 </style>
