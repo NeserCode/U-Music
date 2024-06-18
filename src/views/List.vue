@@ -24,7 +24,6 @@ onMounted(async () => {
 	const { getSongList } = useApi()
 	const data = await getSongList({ id: rawId as string })
 	listSongData.value = data
-	console.log(data)
 })
 </script>
 
