@@ -1,3 +1,5 @@
+import { RawSongPrivilegeData } from "."
+
 export interface BaseReturn {
 	/** The request URL. */
 	url: string
@@ -88,4 +90,127 @@ export interface TopListSimpleReturn {
 }
 export interface TopListReturn extends BaseReturn {
 	data: TopListSimpleReturn
+}
+
+export interface PlayListCreatorOrSubscriber {
+	accountStatus: number
+	anchor: boolean
+	authStatus: number
+	authenticationTypes: number
+	authority: number
+	avatarDetail: {
+		identityIconUrl: string
+		identityLevel: number
+		userType: number
+	} | null
+	avatarImgId: number
+	avatarImgIdStr: string
+	avatarImgId_str: string
+	avatarUrl: string
+	backgroundImgId: number
+	backgroundImgIdStr: string
+	backgroundUrl: string
+	birthday: number
+	city: number
+	defaultAvatar: boolean
+	description: string
+	detailDescription: string
+	djStatus: number
+	expertTags: any
+	experts: any
+	followed: boolean
+	gender: number
+	mutual: boolean
+	nickname: string
+	province: number
+	remarkName: any
+	signature: string
+	userId: number
+	userType: number
+	vipType: number
+}
+export interface PlayListTrackID {
+	alg: any
+	at: number
+	dpr: any
+	f: any
+	id: number
+	lr: number
+	rcmdReason: string
+	sc: any
+	sr: any
+	t: number
+	uid: number
+	v: number
+}
+export interface PlayListDetail {
+	adType: number
+	algTags: any
+	backgroundCoverId: number
+	backgroundCoverUrl: any
+	bannedTrackIds: any
+	cloudTrackCount: number
+	commentCount: number
+	commentThreadId: string
+	copied: boolean
+	coverImgId: number
+	coverImgId_str: string
+	coverImgUrl: string
+	coverStatus: number
+	createTime: number
+	creator: PlayListCreatorOrSubscriber
+	description: string
+	detailPageTitle: any
+	displayTags: any
+	distributeTags: any
+	englishTitle: any
+	gradeStatus: string
+	highQuality: boolean
+	historySharedUsers: any
+	id: number
+	mvResourceInfos: any
+	name: string
+	newDetailPageRemixVideo: any
+	newImported: boolean
+	officialPlaylistType: any
+	opRecommend: boolean
+	ordered: boolean
+	playCount: number
+	privacy: number
+	relateResType: any
+	remixVideo: any
+	score: any
+	shareCount: number
+	specialType: number
+	status: number
+	subscribed: boolean
+	subscribedCount: number
+	subscribers: PlayListCreatorOrSubscriber[]
+	tags: string[]
+	titleImage: number
+	titleImageUrl: any
+	trackCount: number
+	trackIds: PlayListTrackID[]
+	trackNumberUpdateTime: number
+	trackUpdateTime: number
+	tracks: any[]
+	trialMode: number
+	updateFrequency: any
+	updateTime: number
+	userId: number
+	videoIds: any
+	videos: any
+}
+
+export interface PlayListSimpleReturn {
+	code: number
+	fromUserCount: number
+	fromUsers: any
+	playlist: any[]
+	privileges: RawSongPrivilegeData[]
+	relatedVideos: any
+	resEntrance: any
+	sharedPrivilege: any
+	songFromUsers: any
+	urls: any
 }

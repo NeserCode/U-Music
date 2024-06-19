@@ -23,7 +23,7 @@ onMounted(() => {
 			localLists.value = lists
 			localListPages.value.total = localLists.value.length
 
-			console.log(lists)
+			console.log("[Local Lists]", lists)
 		},
 		{ immediate: true }
 	)
