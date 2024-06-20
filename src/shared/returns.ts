@@ -1,4 +1,4 @@
-import { RawSongPrivilegeData } from "."
+import { RawSongPrivilegeData, RawSongSearchData } from "."
 
 export interface BaseReturn {
 	/** The request URL. */
@@ -144,6 +144,7 @@ export interface PlayListTrackID {
 	v: number
 }
 export interface PlayListDetail {
+	TopListType: string
 	adType: number
 	algTags: any
 	backgroundCoverId: number
@@ -193,7 +194,7 @@ export interface PlayListDetail {
 	trackIds: PlayListTrackID[]
 	trackNumberUpdateTime: number
 	trackUpdateTime: number
-	tracks: any[]
+	tracks: RawSongSearchData[]
 	trialMode: number
 	updateFrequency: any
 	updateTime: number
@@ -201,16 +202,18 @@ export interface PlayListDetail {
 	videoIds: any
 	videos: any
 }
-
 export interface PlayListSimpleReturn {
 	code: number
 	fromUserCount: number
 	fromUsers: any
-	playlist: any[]
+	playlist: PlayListDetail
 	privileges: RawSongPrivilegeData[]
 	relatedVideos: any
 	resEntrance: any
 	sharedPrivilege: any
 	songFromUsers: any
 	urls: any
+}
+export interface PlayListReturn extends BaseReturn {
+	data: PlayListSimpleReturn
 }

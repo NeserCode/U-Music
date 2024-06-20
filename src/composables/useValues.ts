@@ -1,10 +1,14 @@
 import { useDebounceFn, useStorage } from "@vueuse/core"
-import { CountriesCodeSimpleReturn, TopListSimpleReturn } from "@shared"
+import {
+	CountriesCodeSimpleReturn,
+	PlayListSimpleReturn,
+	TopListSimpleReturn,
+} from "@shared"
 import { useApi } from "@composables/useApi"
 import { useCookie } from "@composables/useCookie"
 import { computed } from "vue"
 
-const { getCountriesCodeList, getTopLists } = useApi()
+const { getCountriesCodeList, getTopLists, getSongList } = useApi()
 const { allCookies: cookies, cookieToString } = useCookie()
 
 // Cookie 使用
@@ -63,7 +67,34 @@ const topListsUpdater = useDebounceFn(async () => {
 })
 
 // 歌单
-// const $playList
+const $playLists = useStorage<PlayListSimpleReturn["playlist"][]>(
+	"play-list",
+	[]
+)
+const $playListIDs = computed(() => $playLists.value.map((i) => i.id))
+const playListsUpdater = useDebounceFn(async (id: string) => {
+	let shouldUpdateList = $playLists.value.find(
+		(list) => list.id.toString() === id
+	)
+	const update = async () => {
+		let res = await getSongList({ id })
+		if (!shouldUpdateList) {
+			if (res) $playLists.value.push(res.data.playlist)
+		} else if (res) shouldUpdateList = res.data.playlist
+
+		return res?.data.playlist
+	}
+	if (
+		$playListIDs.value.length === 0 ||
+		!$playListIDs.value.includes(parseInt(id, 10))
+	)
+		return await update()
+	else {
+		let latest = shouldUpdateList?.updateTime
+		let now = new Date().getTime()
+		if (latest && now - latest > 1000 * 60 * 60 * 12) return await update()
+	}
+})
 
 export const useValues = () => ({
 	$countriesCodeList,
@@ -71,4 +102,7 @@ export const useValues = () => ({
 	$topLists,
 	$topListIDs,
 	topListsUpdater,
+	$playLists,
+	$playListIDs,
+	playListsUpdater,
 })

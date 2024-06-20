@@ -136,7 +136,8 @@ const matchClass = (page: number) =>
 
 <style lang="postcss" scoped>
 .pagination-main {
-	@apply w-full flex items-center justify-center gap-2 py-4;
+	@apply w-full flex items-center justify-center gap-2 py-4
+	select-none;
 }
 
 .pagination-main .btn {

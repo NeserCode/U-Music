@@ -1,14 +1,17 @@
 <script lang="ts" setup>
+import TopListSongs from "@components/TopListSongs.vue"
+
 import { useRoute } from "vue-router"
 import { computed, onMounted, ref } from "vue"
 import { useValues } from "@composables/useValues"
-import { useApi } from "@composables/useApi"
+import { PlayListDetail } from "@/shared"
 
 const { params } = useRoute()
 const { hash: rawId } = params
 const numberId = parseInt(rawId as string, 10)
 
-const { $topListIDs, $topLists } = useValues()
+const { $topListIDs, $topLists, $playListIDs, $playLists, playListsUpdater } =
+	useValues()
 const isTopList =
 	rawId === numberId.toString() ? $topListIDs.value.includes(numberId) : false
 const $id = computed(() => (isTopList ? numberId : rawId))
@@ -19,11 +22,17 @@ const listData = computed(
 		]
 )
 
-const listSongData = ref()
+const existPlayList = computed(() => $playListIDs.value.includes(numberId))
+const listSongData = ref<PlayListDetail>()
 onMounted(async () => {
-	const { getSongList } = useApi()
-	const data = await getSongList({ id: rawId as string })
-	listSongData.value = data
+	if (!existPlayList.value)
+		listSongData.value = await playListsUpdater(rawId as string)
+	else {
+		listSongData.value =
+			$playLists.value[
+				$playLists.value.findIndex((list) => list.id === numberId)
+			]
+	}
 })
 </script>
 
@@ -41,6 +50,8 @@ onMounted(async () => {
 				>
 			</span>
 		</span>
+
+		<TopListSongs v-if="isTopList" :songs="listSongData?.tracks" />
 	</div>
 </template>
 
