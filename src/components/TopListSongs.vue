@@ -49,7 +49,16 @@ onMounted(() => {
 		</div>
 		<div class="songs-container">
 			<span class="song" v-for="song in computedSongs" :key="song.id">
-				{{ song.name }}
+				<span class="name">
+					{{ song.name }}
+					<span
+						class="tns"
+						v-if="song.tns?.length"
+						:title="song.tns?.join('·')"
+					>
+						{{ song.tns?.join("·") }}
+					</span>
+				</span>
 			</span>
 		</div>
 		<Pagination :pages="songPages" :changes="songPageChanges" />
@@ -70,8 +79,15 @@ onMounted(() => {
 	@apply w-full flex flex-col justify-center items-center md:px-12 lg:px-24 gap-2;
 }
 .song {
-	@apply w-full inline-flex items-center gap-1 px-4 py-2
-  rounded-md bg-sky-100 dark:bg-sky-900
-  text-sm;
+	@apply w-full inline-flex flex-col justify-center gap-1 px-4 py-2
+  rounded bg-sky-100 dark:bg-sky-900
+  text-base
+	transition-all ease-in-out duration-300;
+}
+.song .tns {
+	@apply w-fit max-w-24 inline-block py-0.5 px-1
+	rounded bg-blue-200 dark:bg-blue-600
+	overflow-hidden text-ellipsis whitespace-nowrap
+	text-xs;
 }
 </style>

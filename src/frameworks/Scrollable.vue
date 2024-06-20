@@ -59,7 +59,7 @@ watch(isScrollbarAutoHide, () => {
 
 <style lang="postcss">
 .simplebar-track.simplebar-vertical {
-	@apply w-4;
+	@apply w-4 mr-1;
 }
 .simplebar-scrollbar:before {
 	@apply w-3

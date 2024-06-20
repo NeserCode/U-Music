@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import TopListSongs from "@components/TopListSongs.vue"
+import PlayListCreator from "@components/PlayListCreator.vue"
 
 import { useRoute } from "vue-router"
 import { computed, onMounted, ref } from "vue"
@@ -38,15 +39,21 @@ onMounted(async () => {
 
 <template>
 	<div class="view-list">
-		<span class="title" v-if="isTopList">排行榜 {{ $id }}</span>
-		<span class="title" v-else>歌单 {{ $id }}</span>
+		<span class="title" v-if="isTopList">排行榜 #{{ $id }}</span>
+		<span class="title" v-else>歌单 #{{ $id }}</span>
 		<span class="top-list-info" v-if="isTopList">
 			<img class="cover" :src="listData.coverImgUrl" alt="" />
 			<span class="text">
 				<span class="name">{{ listData.name }}</span>
+				<PlayListCreator :creator="listSongData?.creator" />
 				<span class="description">{{ listData.description }}</span>
 				<span class="update"
-					>更新于 {{ new Date(listData.updateTime).toLocaleDateString() }}</span
+					>更新于
+					{{
+						new Date(listData.updateTime).toLocaleDateString() +
+						" " +
+						new Date(listData.updateTime).toLocaleTimeString()
+					}}</span
 				>
 			</span>
 		</span>
