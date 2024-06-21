@@ -55,10 +55,18 @@ html.dark {
 .view-leave-active {
 	@apply transition-all ease-in-out duration-300;
 }
-
 .view-enter-from,
 .view-leave-to {
 	@apply opacity-0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+	@apply transition-all ease-in-out duration-300;
+}
+.fade-enter-from,
+.fade-leave-to {
+	@apply opacity-0 -translate-x-2;
 }
 
 /* Keyframes */

@@ -9,5 +9,8 @@ export const useConstant = () => {
 				updatedAt: new Date(),
 			},
 		},
+		router: {
+			alterExceptionRoutes: ["Home", "Setting"],
+		},
 	}
 }

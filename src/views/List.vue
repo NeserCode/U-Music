@@ -63,6 +63,11 @@ onMounted(async () => {
 </template>
 
 <style lang="postcss" scoped>
+.view-list {
+	@apply flex gap-1 md:p-4 lg:p-8
+	select-none;
+}
+
 .title {
 	@apply w-full flex items-center justify-center py-1
 	text-sm opacity-40;

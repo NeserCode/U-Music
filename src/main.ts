@@ -18,5 +18,14 @@ NProgress.configure({
 	minimum: 0.1,
 })
 
+router.beforeEach((to, from, next) => {
+	to.meta.activeLink = {
+		name: from.name?.toString() ?? "",
+		link: from.path ?? "/",
+	}
+
+	next()
+})
+
 useWindow().nextTickToHide()
 createApp(App).use(router).mount("#app")

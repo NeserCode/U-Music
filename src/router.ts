@@ -58,3 +58,13 @@ const router = createRouter({
 })
 
 export default router
+
+declare module "vue-router" {
+	interface RouteMeta {
+		hideTopLinks?: boolean
+		activeLink?: {
+			name: string
+			link: string
+		}
+	}
+}
