@@ -10,7 +10,7 @@ export const useConstant = () => {
 			},
 		},
 		router: {
-			alterExceptionRoutes: ["Home", "Setting"],
+			// alterExceptionRoutes: ["Home", "Setting"],
 		},
 	}
 }

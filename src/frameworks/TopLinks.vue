@@ -3,7 +3,7 @@ import {
 	MusicalNoteIcon,
 	AdjustmentsHorizontalIcon,
 } from "@heroicons/vue/24/solid"
-import AlterLink from "@frameworks/AlterLink.vue"
+import Back from "@frameworks/Back.vue"
 import { computed } from "vue"
 import { useRoute } from "vue-router"
 
@@ -21,7 +21,7 @@ const isNeedHidden = computed(() => $route.meta.hideTopLinks)
 			<AdjustmentsHorizontalIcon class="icon" />
 			<span class="text">设置</span>
 		</RouterLink>
-		<AlterLink class="alter" />
+		<Back class="back" />
 	</div>
 </template>
 
