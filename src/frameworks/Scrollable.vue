@@ -32,9 +32,12 @@ const initSimpleBar = useIntervalFn(() => {
 			})
 		else throw Error("Scrollable cannot reach the content, view not found.")
 
-		scrollbarRef.value.init()
+		if (scrollbarRef.value.el) scrollbarRef.value.recalculate()
+		else scrollbarRef.value.init()
+		console.log("init")
+
 		initSimpleBar.pause()
-		setTimeout(nextTickToShow, 100)
+		setTimeout(nextTickToShow, 0)
 	})
 }, 500)
 
