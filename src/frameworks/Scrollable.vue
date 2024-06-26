@@ -34,7 +34,6 @@ const initSimpleBar = useIntervalFn(() => {
 
 		if (scrollbarRef.value.el) scrollbarRef.value.recalculate()
 		else scrollbarRef.value.init()
-		console.log("init")
 
 		initSimpleBar.pause()
 		setTimeout(nextTickToShow, 0)

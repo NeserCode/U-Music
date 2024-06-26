@@ -5,9 +5,9 @@ import { useValues } from "@composables/useValues"
 import { onMounted } from "vue"
 
 const { countriesCodeListUpdater, topListsUpdater } = useValues()
-onMounted(async () => {
-	await countriesCodeListUpdater()
-	await topListsUpdater()
+onMounted(() => {
+	countriesCodeListUpdater()
+	topListsUpdater()
 })
 </script>
 

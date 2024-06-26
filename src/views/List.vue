@@ -3,7 +3,7 @@ import TopListSongs from "@components/TopListSongs.vue"
 import PlayListCreator from "@components/PlayListCreator.vue"
 
 import { useRoute } from "vue-router"
-import { computed, onMounted, ref } from "vue"
+import { computed, onMounted, ref, watch } from "vue"
 import { useValues } from "@composables/useValues"
 import { PlayListDetail } from "@/shared"
 
@@ -11,8 +11,7 @@ const { params } = useRoute()
 const { hash: rawId } = params
 const numberId = parseInt(rawId as string, 10)
 
-const { $topListIDs, $topLists, $playListIDs, $playLists, playListsUpdater } =
-	useValues()
+const { $topListIDs, $topLists, $playLists, playListsUpdater } = useValues()
 const isTopList =
 	rawId === numberId.toString() ? $topListIDs.value.includes(numberId) : false
 const $id = computed(() => (isTopList ? numberId : rawId))
@@ -23,17 +22,23 @@ const listData = computed(
 		]
 )
 
-const existPlayList = computed(() => $playListIDs.value.includes(numberId))
 const listSongData = ref<PlayListDetail>()
 onMounted(async () => {
-	if (!existPlayList.value)
-		listSongData.value = await playListsUpdater(rawId as string)
-	else {
+	const update = () => {
 		listSongData.value =
 			$playLists.value[
 				$playLists.value.findIndex((list) => list.id === numberId)
 			]
 	}
+	playListsUpdater(rawId as string)
+	update()
+	watch(
+		$playLists,
+		() => {
+			update()
+		},
+		{ deep: true }
+	)
 })
 </script>
 
@@ -77,7 +82,7 @@ onMounted(async () => {
 	@apply w-full flex items-center gap-4 py-2 md:px-24 lg:px-36;
 }
 .top-list-info .cover {
-	@apply md:w-36 md:h-36 lg:w-48 lg:h-48;
+	@apply rounded md:w-36 md:h-36 lg:w-48 lg:h-48;
 }
 .top-list-info .text {
 	@apply inline-flex flex-col;
