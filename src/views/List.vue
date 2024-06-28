@@ -79,7 +79,7 @@ onMounted(async () => {
 }
 
 .top-list-info {
-	@apply w-full flex items-center gap-4 py-2 md:px-24 lg:px-36;
+	@apply w-full h-48 flex items-center gap-4 py-2 md:px-24 lg:px-36;
 }
 .top-list-info .cover {
 	@apply rounded md:w-36 md:h-36 lg:w-48 lg:h-48;
@@ -91,7 +91,8 @@ onMounted(async () => {
 	@apply text-lg font-semibold;
 }
 .text .description {
-	@apply whitespace-pre-line text-sm
+	@apply h-20 whitespace-pre-line text-sm
+	overflow-y-auto
 	text-gray-400;
 }
 .text .update {

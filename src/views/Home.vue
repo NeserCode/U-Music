@@ -2,12 +2,19 @@
 import LocalList from "@components/LocalList.vue"
 import TopList from "@/components/TopList.vue"
 import { useValues } from "@composables/useValues"
-import { onMounted } from "vue"
+import { onDeactivated, onMounted } from "vue"
+import { BoundingObserver } from "@composables/useWindow"
 
 const { countriesCodeListUpdater, topListsUpdater } = useValues()
+let RO: any = null
 onMounted(() => {
 	countriesCodeListUpdater()
 	topListsUpdater()
+	RO = new BoundingObserver("home")
+	RO?.observe()
+})
+onDeactivated(() => {
+	RO?.disconnect()
 })
 </script>
 

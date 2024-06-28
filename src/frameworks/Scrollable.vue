@@ -6,6 +6,7 @@ import { nextTick, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 import { useScrollbar } from "@composables/useScrollbar"
 import { useWindow } from "@composables/useWindow"
+import { $bus } from "@/composables/useMitt"
 
 const scrollbarRef = ref<SimpleBar | null>(null)
 const { isScrollbarAutoHide } = useScrollbar()
@@ -36,6 +37,7 @@ const initSimpleBar = useIntervalFn(() => {
 		else scrollbarRef.value.init()
 
 		initSimpleBar.pause()
+		$bus.emit("scrollbar-init")
 		setTimeout(nextTickToShow, 0)
 	})
 }, 500)
