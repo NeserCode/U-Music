@@ -3,9 +3,9 @@ import SettingSwitchItem from "@components/SettingSwitchItem.vue"
 import SettingInputItem from "@components/SettingInputItem.vue"
 
 import { useStorage } from "@vueuse/core"
-import { ref } from "vue"
+import { onDeactivated, onMounted, ref } from "vue"
 import { useAppRounded } from "@composables/useAppRounded"
-import { useWindow } from "@composables/useWindow"
+import { BoundingObserver, useWindow } from "@composables/useWindow"
 import { useDarkMode } from "@composables/useDarkMode"
 import { useScrollbar } from "@composables/useScrollbar"
 import { useServerConfig } from "@composables/useServerConfig"
@@ -35,6 +35,15 @@ const { isRounded } = useAppRounded()
 const { isDarkMode } = useDarkMode()
 const { isScrollbarAutoHide } = useScrollbar()
 const { appAlwaysOnTop } = useWindow()
+
+let RO: any = null
+onMounted(() => {
+	RO = new BoundingObserver("setting")
+	RO?.observe()
+})
+onDeactivated(() => {
+	RO?.disconnect()
+})
 </script>
 
 <template>

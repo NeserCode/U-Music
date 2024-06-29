@@ -20,12 +20,6 @@ onDeactivated(() => {
 
 <template>
 	<div class="view-home">
-		<!-- <div class="links">
-			<RouterLink to="/list/123">List</RouterLink>
-			<RouterLink to="/artist/123">Artist</RouterLink>
-			<RouterLink to="/album/123">Album</RouterLink>
-			<RouterLink to="/song">Song</RouterLink>
-		</div> -->
 		<LocalList />
 		<TopList />
 	</div>
@@ -33,7 +27,7 @@ onDeactivated(() => {
 
 <style lang="postcss" scoped>
 .view-home {
-	@apply h-screen flex gap-1 md:p-4 lg:p-8
+	@apply h-[516px] flex gap-1 md:p-4 lg:p-8
 	select-none transition-colors ease-in-out duration-300;
 }
 .links {

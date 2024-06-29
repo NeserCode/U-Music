@@ -3,9 +3,11 @@ import TopListSongs from "@components/TopListSongs.vue"
 import PlayListCreator from "@components/PlayListCreator.vue"
 
 import { useRoute } from "vue-router"
-import { computed, onMounted, ref, watch } from "vue"
+import { computed, onDeactivated, onMounted, ref, watch } from "vue"
 import { useValues } from "@composables/useValues"
-import { PlayListDetail } from "@/shared"
+import { BoundingObserver } from "@composables/useWindow"
+import { $bus } from "@composables/useMitt"
+import { PlayListDetail } from "@shared"
 
 const { params } = useRoute()
 const { hash: rawId } = params
@@ -36,9 +38,19 @@ onMounted(async () => {
 		$playLists,
 		() => {
 			update()
+			$bus.emit("dynamic-content-init")
 		},
 		{ deep: true }
 	)
+})
+
+let RO: any = null
+onMounted(() => {
+	RO = new BoundingObserver("list")
+	RO?.observe()
+})
+onDeactivated(() => {
+	RO?.disconnect()
 })
 </script>
 
@@ -69,7 +81,7 @@ onMounted(async () => {
 
 <style lang="postcss" scoped>
 .view-list {
-	@apply flex gap-1 md:p-4 lg:p-8
+	@apply h-[1064px] flex gap-1 md:p-4 lg:p-8
 	select-none;
 }
 

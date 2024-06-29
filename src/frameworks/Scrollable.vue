@@ -53,6 +53,11 @@ watch(
 watch(isScrollbarAutoHide, () => {
 	initSimpleBar.resume()
 })
+$bus.on("dynamic-content-init", () => {
+	nextTick(() => {
+		initSimpleBar.resume()
+	})
+})
 </script>
 
 <template>
