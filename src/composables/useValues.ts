@@ -1,4 +1,4 @@
-import { useDebounceFn, useStorage } from "@vueuse/core"
+import { useDebounceFn, useStorage, watchOnce } from "@vueuse/core"
 import {
 	CountriesCodeSimpleReturn,
 	PlayListSimpleReturn,
@@ -6,7 +6,7 @@ import {
 } from "@shared"
 import { useApi } from "@composables/useApi"
 import { useCookie } from "@composables/useCookie"
-import { computed, watch } from "vue"
+import { computed } from "vue"
 
 const { getCountriesCodeList, getTopLists, getSongList } = useApi()
 const { allCookies: cookies, cookieToString } = useCookie()
@@ -28,7 +28,7 @@ const countriesCodeListUpdater = useDebounceFn(() => {
 	const { execute: update, data: countriesCodeList } = getCountriesCodeList({
 		cookie: cookie.value,
 	})
-	watch(countriesCodeList, () => {
+	watchOnce(countriesCodeList, () => {
 		$countriesCodeList.value = countriesCodeList.value?.data
 	})
 	if (
@@ -53,9 +53,13 @@ const topListsUpdater = useDebounceFn(() => {
 	const { execute: update, data: topLists } = getTopLists({
 		cookie: cookie.value,
 	})
-	watch(topLists, () => {
+	watchOnce(topLists, () => {
 		if (topLists.value?.code === 200) $topLists.value = topLists.value
 	})
+	watchOnce(topLists, () => {
+		$topLists.value = topLists.value
+	})
+
 	if ($topLists.value.code !== 200 || $topLists.value.list.length === 0)
 		return update()
 	else {
@@ -64,7 +68,10 @@ const topListsUpdater = useDebounceFn(() => {
 		for (const i of $topLists.value.list)
 			if (i.updateTime > latest) latest = i.updateTime
 
-		if (now - latest > 1000 * 60 * 60 * 24) return update()
+		if (now - latest > 1000 * 60 * 60 * 24) {
+			console.log(`TopList overtime`)
+			update()
+		}
 	}
 })
 
@@ -82,24 +89,26 @@ const playListsUpdater = useDebounceFn((id: string) => {
 		id,
 		cookie: cookie.value,
 	})
-	let shouldUpdateList = $playLists.value.find(
+	let shouldUpdateListIndex = $playLists.value.findIndex(
 		(list) => list.id.toString() === id
 	)
-	watch(playList, () => {
-		if (shouldUpdateList && playList.value !== null)
-			shouldUpdateList = playList.value.playlist
-		else if (!shouldUpdateList && playList.value !== null)
+	watchOnce(playList, () => {
+		console.log("Fetch?")
+
+		if (shouldUpdateListIndex !== -1 && playList.value !== null)
+			$playLists.value[shouldUpdateListIndex] = playList.value.playlist
+		else if (!(shouldUpdateListIndex !== -1) && playList.value !== null)
 			$playLists.value.push(playList.value.playlist)
 	})
 
 	const included = $playListIDs.value.includes(parseInt(id, 10))
 	if ($playListIDs.value.length === 0 || !included) return update()
 	else if (included) {
-		let latest = shouldUpdateList?.updateTime
+		let latest = $playLists.value[shouldUpdateListIndex]?.updateTime
 		let now = new Date().getTime()
 		if (latest && now - latest > 1000 * 60 * 60 * 24) {
-			console.log(`Playlist ${id} overtime`, now, latest, shouldUpdateList)
-			return update()
+			console.log(`Playlist ${id} overtime`)
+			update()
 		}
 	}
 })

@@ -37,8 +37,9 @@ const initSimpleBar = useIntervalFn(() => {
 		else scrollbarRef.value.init()
 
 		initSimpleBar.pause()
+
 		$bus.emit("scrollbar-init")
-		setTimeout(nextTickToShow, 0)
+		nextTickToShow()
 	})
 }, 500)
 
