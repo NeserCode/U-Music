@@ -93,8 +93,6 @@ const playListsUpdater = useDebounceFn((id: string) => {
 		(list) => list.id.toString() === id
 	)
 	watchOnce(playList, () => {
-		console.log("Fetch?")
-
 		if (shouldUpdateListIndex !== -1 && playList.value !== null)
 			$playLists.value[shouldUpdateListIndex] = playList.value.playlist
 		else if (!(shouldUpdateListIndex !== -1) && playList.value !== null)
