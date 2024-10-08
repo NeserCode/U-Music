@@ -59,6 +59,11 @@ onMounted(() => {
 						{{ song.tns?.join("·") }}
 					</span>
 				</span>
+				<span class="artists">
+					<span class="artist" v-for="artist in song.ar">
+						{{ artist.name }}
+					</span>
+				</span>
 			</span>
 		</div>
 		<Pagination :pages="songPages" :changes="songPageChanges" />
@@ -79,7 +84,7 @@ onMounted(() => {
 	@apply w-full flex flex-col justify-center items-center md:px-12 lg:px-24 gap-2;
 }
 .song {
-	@apply w-full inline-flex flex-col justify-center gap-1 px-4 py-2
+	@apply w-full inline-flex flex-col justify-center gap-x-1 px-4 py-2
   rounded bg-sky-100 dark:bg-sky-900
   text-base
 	transition-all ease-in-out duration-300;
@@ -89,5 +94,16 @@ onMounted(() => {
 	rounded bg-blue-200 dark:bg-blue-600
 	overflow-hidden text-ellipsis whitespace-nowrap
 	text-xs;
+}
+
+.song .artists {
+	@apply inline-flex items-center flex-wrap;
+}
+.artists .artist {
+	@apply text-sm opacity-50;
+}
+.artist:not(:last-child)::after {
+	@apply inline-block mx-0.5
+	content-['&'] text-xs;
 }
 </style>

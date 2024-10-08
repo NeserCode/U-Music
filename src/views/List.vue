@@ -58,33 +58,38 @@ onDeactivated(() => {
 
 <template>
 	<div class="view-list">
-		<span class="title" v-if="isTopList">排行榜 #{{ $id }}</span>
-		<span class="title" v-else>歌单 #{{ $id }}</span>
-		<span class="top-list-info" v-if="isTopList">
-			<img class="cover" :src="listData.coverImgUrl" alt="" />
-			<span class="text">
-				<span class="name">{{ listData.name }}</span>
-				<PlayListCreator :creator="listSongData?.creator" />
-				<span class="description">{{ listData.description }}</span>
-				<span class="update"
-					>更新于
-					{{
-						new Date(listData.updateTime).toLocaleDateString() +
-						" " +
-						new Date(listData.updateTime).toLocaleTimeString()
-					}}</span
-				>
+		<div class="content-container">
+			<span class="title" v-if="isTopList">排行榜 #{{ $id }}</span>
+			<span class="title" v-else>歌单 #{{ $id }}</span>
+			<span class="top-list-info" v-if="isTopList">
+				<img class="cover" :src="listData.coverImgUrl" alt="" />
+				<span class="text">
+					<span class="name">{{ listData.name }}</span>
+					<PlayListCreator :creator="listSongData?.creator" />
+					<span class="description">{{ listData.description }}</span>
+					<span class="update"
+						>更新于
+						{{
+							new Date(listData.updateTime).toLocaleDateString() +
+							" " +
+							new Date(listData.updateTime).toLocaleTimeString()
+						}}</span
+					>
+				</span>
 			</span>
-		</span>
 
-		<TopListSongs v-if="isTopList" :songs="listSongData?.tracks" />
+			<TopListSongs v-if="isTopList" :songs="listSongData?.tracks" />
+		</div>
 	</div>
 </template>
 
 <style lang="postcss" scoped>
 .view-list {
-	@apply h-[1064px] flex gap-1 md:p-4 lg:p-8
+	@apply h-[1064px] flex flex-col justify-center gap-1 md:p-4 lg:p-8
 	select-none;
+}
+.content-container {
+	@apply w-full h-full flex flex-col justify-center items-center;
 }
 
 .title {
@@ -93,7 +98,9 @@ onDeactivated(() => {
 }
 
 .top-list-info {
-	@apply w-full h-48 flex items-center gap-4 py-2 md:px-24 lg:px-36;
+	@apply w-fit h-48 flex items-center gap-4 py-2;
+
+	max-width: 75%;
 }
 .top-list-info .cover {
 	@apply rounded md:w-36 md:h-36 lg:w-48 lg:h-48;
