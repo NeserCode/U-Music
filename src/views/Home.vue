@@ -27,7 +27,7 @@ onDeactivated(() => {
 
 <style lang="postcss" scoped>
 .view-home {
-	@apply h-[516px] flex gap-1 md:p-4 lg:p-8
+	@apply h-[516px] flex flex-col gap-1 md:p-4 lg:p-8
 	select-none transition-colors ease-in-out duration-300;
 }
 .links {
