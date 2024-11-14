@@ -47,7 +47,7 @@ const topListPageChanges = usePaginationChanges(topListPages)
 					<PhotoIcon v-else class="icon" />
 				</RouterLink>
 				<span class="info">
-					<RouterLink :to="`/list/${list.id}`" class="title">
+					<RouterLink :to="`/list/${list.id}`" class="title" :title="list.name">
 						{{ list.name }}
 						<span class="songs-count">{{ list.ToplistType }}</span>
 					</RouterLink>
@@ -112,7 +112,8 @@ const topListPageChanges = usePaginationChanges(topListPages)
 	@apply inline-flex flex-col justify-center;
 }
 .info .title {
-	@apply inline-block md:w-28 lg:w-36 text-sm
+	@apply block md:max-w-28 lg:max-w-36 text-sm
+	truncate
   transition-colors ease-in-out duration-300;
 }
 .info .songs-count {

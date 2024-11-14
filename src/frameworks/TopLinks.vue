@@ -1,14 +1,32 @@
 <script lang="ts" setup>
+import SongState from "@/components/SongState.vue"
+import SongControl from "@/components/SongControl.vue"
+
 import {
 	MusicalNoteIcon,
 	AdjustmentsHorizontalIcon,
 } from "@heroicons/vue/24/solid"
 import Back from "@frameworks/Back.vue"
-import { computed } from "vue"
+import { computed, onMounted, ref } from "vue"
 import { useRoute } from "vue-router"
+
+import { $bus } from "@composables/useMitt"
+import type { MittSongStateParams } from "@/shared/mitt"
 
 const $route = useRoute()
 const isNeedHidden = computed(() => $route.meta.hideTopLinks)
+
+const playingSong = ref<MittSongStateParams>({
+	id: -1,
+	title: "当前未播放",
+	artist: "--",
+	image: "",
+})
+onMounted(() => {
+	$bus.on("song-switch", (song) => {
+		playingSong.value = song
+	})
+})
 </script>
 
 <template>
@@ -22,6 +40,8 @@ const isNeedHidden = computed(() => $route.meta.hideTopLinks)
 			<span class="text">设置</span>
 		</RouterLink>
 		<Back class="back" />
+		<SongState :song="playingSong" />
+		<SongControl />
 	</div>
 </template>
 

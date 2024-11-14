@@ -3,6 +3,7 @@ import Pagination from "@components/Pagination.vue"
 
 import { ref, computed, onMounted, watch } from "vue"
 import { usePaginationChanges } from "@composables/useComponentsUtils"
+import { $bus } from "@composables/useMitt"
 
 import type { PaginationPages, RawSongSearchData } from "@shared"
 
@@ -36,6 +37,33 @@ onMounted(() => {
 		{ deep: true }
 	)
 })
+
+const switchSong = (songId: number) => {
+	$bus.emit("song-switch", getComputedSongDetails(songId))
+}
+const getComputedSongDetails = (songId: number) => {
+	const song = $props.songs.find((song) => song.id === songId)
+	let computedSongArtist = ""
+	if (song?.ar?.length)
+		computedSongArtist = song?.ar.map((artist) => artist.name).join(" & ")
+
+	const computedSong = {
+		id: songId,
+		title: song?.name,
+		artist: computedSongArtist,
+		image: song?.al?.picUrl,
+	}
+	console.log(`[Song Switched] ${songId}`)
+
+	return computedSong
+}
+// const getComputedSongRuntime = (songId: number) => {
+// 	const song = $props.songs.find((song) => song.id === songId)
+
+// 	return {
+// 		url: song?.url,
+// 	}
+// }
 </script>
 
 <template>
@@ -48,7 +76,12 @@ onMounted(() => {
 			>
 		</div>
 		<div class="songs-container">
-			<span class="song" v-for="song in computedSongs" :key="song.id">
+			<span
+				class="song"
+				v-for="song in computedSongs"
+				:key="song.id"
+				@click="switchSong(song.id)"
+			>
 				<span class="name">
 					{{ song.name }}
 					<span
