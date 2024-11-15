@@ -7,6 +7,8 @@ import type {
 	CountriesCodeSimpleReturn,
 	PlayListSimpleReturn,
 	SimpleIDParams,
+	SongResourceParams,
+	SongResourceReturn,
 	TopListSimpleReturn,
 } from "@shared"
 import { $bus } from "./useMitt"
@@ -59,9 +61,13 @@ export const useApi = () => {
 	const getSongList = (params: SimpleIDParams) =>
 		get<PlayListSimpleReturn>("playlist/detail", params)
 
+	const getSongResource = (params: SongResourceParams) =>
+		get<SongResourceReturn>("/song/url/v1", params)
+
 	return {
 		getCountriesCodeList,
 		getTopLists,
 		getSongList,
+		getSongResource,
 	}
 }

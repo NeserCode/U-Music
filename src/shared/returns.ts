@@ -1,4 +1,4 @@
-import { RawSongPrivilegeData, RawSongSearchData } from "."
+import { RawSongData, RawSongPrivilegeData, RawSongSearchData } from "."
 
 export interface BaseReturn {
 	/** The request URL. */
@@ -216,4 +216,8 @@ export interface PlayListSimpleReturn {
 }
 export interface PlayListReturn extends BaseReturn {
 	data: PlayListSimpleReturn
+}
+
+export interface SongResourceReturn extends BaseReturn {
+	data: RawSongData[]
 }

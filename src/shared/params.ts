@@ -3,6 +3,7 @@ export interface BaseParams {
 	timestamp?: number
 	cookie?: string
 	noCookie?: boolean
+	os?: string
 }
 
 export interface PageLikeParams extends BaseParams {
@@ -11,5 +12,18 @@ export interface PageLikeParams extends BaseParams {
 }
 
 export interface SimpleIDParams extends BaseParams {
-	id: string
+	id: string | number[] | string[]
+}
+
+export interface SongResourceParams extends SimpleIDParams {
+	level?:
+		| "standard"
+		| "higher"
+		| "exhigh"
+		| "lossless"
+		| "hires"
+		| "jyeffect"
+		| "sky"
+		| "dolby"
+		| "jymaster"
 }
