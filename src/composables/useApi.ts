@@ -62,7 +62,7 @@ export const useApi = () => {
 		get<PlayListSimpleReturn>("playlist/detail", params)
 
 	const getSongResource = (params: SongResourceParams) =>
-		get<SongResourceReturn>("/song/url/v1", params)
+		get<SongResourceReturn>("song/url/v1", params)
 
 	return {
 		getCountriesCodeList,

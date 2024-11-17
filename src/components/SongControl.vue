@@ -1,13 +1,20 @@
 <script lang="ts" setup>
+import { $bus } from "@/composables/useMitt"
 import {
 	PlayIcon,
 	PauseIcon,
 	SpeakerXMarkIcon,
 	SpeakerWaveIcon,
 } from "@heroicons/vue/24/solid"
-import { useStorage } from "@vueuse/core"
-import { computed } from "vue"
+import { useStorage, watchOnce } from "@vueuse/core"
+import { computed, nextTick, onMounted, ref } from "vue"
 
+import { useApi } from "@composables/useApi"
+import { UAudio } from "@/composables/useAudio"
+import { SongResourceParams } from "@/shared"
+import { MittSongStateParams } from "@/shared/mitt"
+
+const $uaudio = ref<UAudio | null>(null)
 const songRuntime = useStorage("song-runtime", {
 	url: undefined,
 	duration: 0,
@@ -16,15 +23,71 @@ const songRuntime = useStorage("song-runtime", {
 	volume: 0.5,
 	mute: false,
 })
+const playingSong = useStorage<MittSongStateParams>("u-playing-song", {
+	id: -1,
+	title: "当前未播放",
+	artist: "--",
+	image: "",
+})
 const playState = computed(() => songRuntime.value.playing)
 const muteState = computed(() => songRuntime.value.mute)
 
+const defaultQuality = useStorage<SongResourceParams["level"]>(
+	"u-default-song-quality",
+	"lossless"
+)
+
 function togglePlay() {
 	songRuntime.value.playing = !songRuntime.value.playing
+	if (songRuntime.value.playing) $uaudio.value?.play()
+	else $uaudio.value?.pause()
 }
 function toggleMute() {
 	songRuntime.value.mute = !songRuntime.value.mute
+	if ($uaudio.value) $uaudio.value.muted = songRuntime.value.mute
 }
+
+onMounted(() => {
+	const { getSongResource } = useApi()
+	const trigger = (song: MittSongStateParams) => {
+		console.log("[Song Control] Switch", song)
+
+		const { data, execute } = getSongResource({
+			id: song.id,
+			level: defaultQuality.value,
+		})
+
+		watchOnce(data, () => {
+			if (!data.value) return
+			if (
+				!data.value.data ||
+				!data.value.data.length ||
+				!data.value.data[0].url
+			)
+				return
+
+			$uaudio.value = new UAudio(data.value.data[0].url)
+			songRuntime.value.playing = false
+			$uaudio.value.play()
+			songRuntime.value.playing = true
+
+			songRuntime.value.volume = $uaudio.value.volume
+			songRuntime.value.mute = $uaudio.value.muted
+			playingSong.value = song
+			console.log("[Song Control] Audio", $uaudio.value)
+		})
+
+		execute()
+	}
+	$bus.on("song-switch", trigger)
+	$bus.on("audio:canplaythrough", () => {
+		console.log("[Song Control] Can play through")
+	})
+
+	$bus.on("scrollbar-init", () => {
+		trigger(playingSong.value)
+	})
+})
 </script>
 
 <template>

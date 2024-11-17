@@ -25,14 +25,11 @@ const listData = computed(
 )
 
 const listSongData = ref<PlayListDetail>()
+const update = () => {
+	listSongData.value =
+		$playLists.value[$playLists.value.findIndex((list) => list.id === numberId)]
+}
 onMounted(() => {
-	const update = () => {
-		listSongData.value =
-			$playLists.value[
-				$playLists.value.findIndex((list) => list.id === numberId)
-			]
-	}
-
 	watch(
 		$playLists,
 		() => {

@@ -12,7 +12,7 @@ export interface PageLikeParams extends BaseParams {
 }
 
 export interface SimpleIDParams extends BaseParams {
-	id: string | number[] | string[]
+	id: number | string | number[] | string[]
 }
 
 export interface SongResourceParams extends SimpleIDParams {

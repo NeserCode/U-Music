@@ -36,4 +36,13 @@ export type MittEvent = {
 
 	"song-switch": MittSongStateParams
 	"song-play": MittSongRuntimeParams
+
+	"audio:canplaythrough": void
+	"audio:play": void
+	"audio:pause": void
+	"audio:ended": void
+	"audio:time-change": number
+	"audio:volume-change": number
+	"audio:mute-change": boolean
+	"audio:loop-change": boolean
 }

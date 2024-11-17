@@ -12,11 +12,12 @@ import { useRoute } from "vue-router"
 
 import { $bus } from "@composables/useMitt"
 import type { MittSongStateParams } from "@/shared/mitt"
+import { useStorage } from "@vueuse/core"
 
 const $route = useRoute()
 const isNeedHidden = computed(() => $route.meta.hideTopLinks)
 
-const playingSong = ref<MittSongStateParams>({
+const playingSong = useStorage<MittSongStateParams>("u-playing-song", {
 	id: -1,
 	title: "当前未播放",
 	artist: "--",
