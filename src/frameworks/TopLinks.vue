@@ -7,7 +7,7 @@ import {
 	AdjustmentsHorizontalIcon,
 } from "@heroicons/vue/24/solid"
 import Back from "@frameworks/Back.vue"
-import { computed, onMounted, ref } from "vue"
+import { computed, onMounted } from "vue"
 import { useRoute } from "vue-router"
 
 import { $bus } from "@composables/useMitt"

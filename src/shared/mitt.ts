@@ -26,8 +26,15 @@ export interface MittSongRuntimeParams extends MittSongEventBaseParams {
 	duration: number
 	current: number
 }
+export interface MittAudioTimeUpdateParams {
+	duration: number
+	current: number
+
+	buffered: TimeRanges
+}
 
 export type MittEvent = {
+	"title-set": string
 	"scrollbar-init"?: void
 	"dynamic-content-init"?: void
 	"http-request-init"?: MittHttpReqParams
@@ -42,6 +49,7 @@ export type MittEvent = {
 	"audio:pause": void
 	"audio:ended": void
 	"audio:time-change": number
+	"audio:time-update": MittAudioTimeUpdateParams
 	"audio:volume-change": number
 	"audio:mute-change": boolean
 	"audio:loop-change": boolean

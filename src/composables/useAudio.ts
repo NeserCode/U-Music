@@ -18,8 +18,13 @@ export class UAudio {
 		this.audio.addEventListener("play", () => {
 			$bus.emit("audio:play")
 		})
-
-		$bus.on("song-switch", this.destroy)
+		this.audio.addEventListener("timeupdate", () => {
+			$bus.emit("audio:time-update", {
+				current: this.audio.currentTime,
+				duration: this.audio.duration,
+				buffered: this.audio.buffered,
+			})
+		})
 	}
 
 	async play() {

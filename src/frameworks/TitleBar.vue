@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useDarkMode } from "@composables/useDarkMode"
-import { ref } from "vue"
+import { onMounted, ref } from "vue"
 import { useWindow } from "@composables/useWindow"
 
 import {
@@ -9,6 +9,7 @@ import {
 	SunIcon,
 	MoonIcon,
 } from "@heroicons/vue/24/solid"
+import { $bus } from "@/composables/useMitt"
 
 const { isDarkMode, toggleDarkMode } = useDarkMode()
 const operations = ref<HTMLDivElement | null>()
@@ -33,12 +34,20 @@ async function minimize() {
 async function close() {
 	await $window.close()
 }
+
+const title = ref(" U Music ")
+onMounted(() => {
+	$bus.on("title-set", (newTitle) => {
+		title.value = newTitle
+		document.title = newTitle
+	})
+})
 </script>
 
 <template>
 	<div class="app-title-bar" data-tauri-drag-region>
 		<span class="title" data-tauri-drag-region>
-			<span data-tauri-drag-region> U Music </span>
+			<span data-tauri-drag-region>{{ title }}</span>
 		</span>
 		<div class="title-bar-operations" data-tauri-drag-region ref="operations">
 			<span

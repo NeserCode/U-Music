@@ -7,7 +7,7 @@ import {
 	SpeakerWaveIcon,
 } from "@heroicons/vue/24/solid"
 import { useStorage, watchOnce } from "@vueuse/core"
-import { computed, nextTick, onMounted, ref } from "vue"
+import { computed, onMounted, ref } from "vue"
 
 import { useApi } from "@composables/useApi"
 import { UAudio } from "@/composables/useAudio"
@@ -52,6 +52,8 @@ onMounted(() => {
 	const trigger = (song: MittSongStateParams) => {
 		console.log("[Song Control] Switch", song)
 
+		$bus.emit("title-set", `${song.title} - ${song.artist}`)
+
 		const { data, execute } = getSongResource({
 			id: song.id,
 			level: defaultQuality.value,
@@ -68,6 +70,8 @@ onMounted(() => {
 
 			$uaudio.value = new UAudio(data.value.data[0].url)
 			songRuntime.value.playing = false
+			if (songRuntime.value.current > 0)
+				$uaudio.value.currentTime = songRuntime.value.current
 			$uaudio.value.play()
 			songRuntime.value.playing = true
 
@@ -87,6 +91,14 @@ onMounted(() => {
 	$bus.on("scrollbar-init", () => {
 		trigger(playingSong.value)
 	})
+	$bus.on("song-switch", () => {
+		$uaudio.value?.destroy()
+	})
+
+	$bus.on("audio:time-update", (updateData) => {
+		songRuntime.value.current = updateData.current
+		songRuntime.value.duration = updateData.duration
+	})
 })
 </script>
 
@@ -100,10 +112,6 @@ onMounted(() => {
 			<SpeakerWaveIcon class="icon" v-if="!muteState" />
 			<SpeakerXMarkIcon class="icon" v-else />
 		</span>
-
-		<audio class="song" v-if="songRuntime.url" :src="songRuntime.url" controls>
-			Your browser does not support the audio element.
-		</audio>
 	</div>
 </template>
 
