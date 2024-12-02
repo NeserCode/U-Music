@@ -78,7 +78,7 @@ onMounted(() => {
 			songRuntime.value.volume = $uaudio.value.volume
 			songRuntime.value.mute = $uaudio.value.muted
 			playingSong.value = song
-			console.log("[Song Control] Audio", $uaudio.value)
+			console.log("[Song Control] Audio", $uaudio.value, data.value)
 		})
 
 		execute()

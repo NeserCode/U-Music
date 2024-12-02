@@ -82,6 +82,7 @@ const getComputedSongDetails = (songId: number) => {
 				:key="song.id"
 				@click="switchSong(song.id)"
 			>
+				<span class="fee" v-if="song.fee < 8"> </span>
 				<span class="name">
 					{{ song.name }}
 					<span
@@ -117,9 +118,16 @@ const getComputedSongDetails = (songId: number) => {
 	@apply w-full flex flex-col justify-center items-center md:px-12 lg:px-24 gap-2;
 }
 .song {
-	@apply w-full inline-flex flex-col justify-center gap-x-1 px-4 py-2
+	@apply relative w-full inline-flex flex-col justify-center gap-x-1 px-4 py-2
   rounded bg-sky-100 dark:bg-sky-900
-  text-base
+  text-base overflow-hidden cursor-pointer
+	transition-all ease-in-out duration-300
+	opacity-80 hover:opacity-100;
+}
+.song .fee {
+	@apply absolute w-5 h-5 -top-0 -left-0 text-xs font-bold
+	bg-yellow-400 dark:bg-yellow-200
+	rotate-45 origin-center -translate-x-2.5 -translate-y-2.5
 	transition-all ease-in-out duration-300;
 }
 .song .tns {

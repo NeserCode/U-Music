@@ -36,7 +36,7 @@ const { song } = toRefs($props)
 	@apply w-7 h-7;
 }
 .song-image .icon {
-	@apply rounded fill-slate-500 dark:fill-slate-400
+	@apply w-7 h-7 rounded fill-slate-500 dark:fill-slate-400
   transition-all ease-in-out duration-300;
 }
 
