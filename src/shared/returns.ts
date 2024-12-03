@@ -221,3 +221,15 @@ export interface PlayListReturn extends BaseReturn {
 export interface SongResourceReturn extends BaseReturn {
 	data: RawSongData[]
 }
+
+export interface SongSearchSimpleReturn {
+	result: {
+		searchQcReminder: any
+		songs: RawSongSearchData[]
+		songCount: number
+	}
+	code: number
+}
+export interface SongSearchReturn extends BaseReturn {
+	data: SongSearchSimpleReturn
+}

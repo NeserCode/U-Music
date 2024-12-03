@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import HomeSearch from "@/components/HomeSearch.vue"
 import LocalList from "@components/LocalList.vue"
 import TopList from "@/components/TopList.vue"
 import { useValues } from "@composables/useValues"
@@ -20,6 +21,7 @@ onDeactivated(() => {
 
 <template>
 	<div class="view-home">
+		<HomeSearch />
 		<LocalList />
 		<TopList />
 	</div>

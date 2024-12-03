@@ -27,3 +27,9 @@ export interface SongResourceParams extends SimpleIDParams {
 		| "dolby"
 		| "jymaster"
 }
+
+export interface SongSearchParams extends BaseParams {
+	keywords: string
+	limit?: number
+	offset?: number
+}
