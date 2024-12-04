@@ -11,6 +11,14 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import("./views/Home.vue"),
 	},
 	{
+		path: "/search/:keywords",
+		name: "Search",
+		meta: {
+			hideTopLinks: false,
+		},
+		component: () => import("./views/Search.vue"),
+	},
+	{
 		path: "/setting",
 		name: "Setting",
 		meta: {

@@ -6,7 +6,9 @@ const keywords = ref<string>("")
 const router = useRouter()
 
 const handleSearch = () => {
-	console.log(keywords.value)
+	if (keywords.value.trim() === "") return
+	keywords.value = keywords.value.trim()
+	router.push(`/search/${encodeURIComponent(keywords.value)}`)
 }
 </script>
 

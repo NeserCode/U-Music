@@ -222,14 +222,11 @@ export interface SongResourceReturn extends BaseReturn {
 	data: RawSongData[]
 }
 
-export interface SongSearchSimpleReturn {
+export interface SongSearchReturn {
 	result: {
 		searchQcReminder: any
 		songs: RawSongSearchData[]
 		songCount: number
 	}
 	code: number
-}
-export interface SongSearchReturn extends BaseReturn {
-	data: SongSearchSimpleReturn
 }
