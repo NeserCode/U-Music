@@ -29,7 +29,7 @@ const playingSong = useStorage<MittSongStateParams>("u-playing-song", {
   artist: "--",
   image: "",
 });
-const playState = computed(() => songRuntime.value.playing);
+const playState = computed(() => !songRuntime.value.playing);
 const muteState = computed(() => songRuntime.value.mute);
 
 const defaultQuality = useStorage<SongResourceParams["level"]>(
@@ -98,6 +98,9 @@ onMounted(() => {
   $bus.on("audio:time-update", (updateData) => {
     songRuntime.value.current = updateData.current;
     songRuntime.value.duration = updateData.duration;
+  });
+  $bus.on("audio:ended", () => {
+    songRuntime.value.playing = false;
   });
 });
 </script>

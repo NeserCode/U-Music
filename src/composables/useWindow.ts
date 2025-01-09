@@ -1,9 +1,10 @@
-import { appWindow } from "@tauri-apps/api/window"
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow"
 import { nextTick } from "vue"
 import { useDebounceFn, useStorage } from "@vueuse/core"
 import { $bus } from "./useMitt"
 
 import type { BoundingContainerType, LocalBoundings } from "@shared"
+const appWindow = getCurrentWebviewWindow()
 
 const setTopDebounce = useDebounceFn(async (flag: boolean) => {
 	await appWindow.setAlwaysOnTop(flag)
