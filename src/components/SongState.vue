@@ -22,13 +22,16 @@ const songRuntime = useStorage("song-runtime", {
 const songPlayed = computed(
 	() => songRuntime.value.current / songRuntime.value.duration
 )
+const songPlaying = computed(
+	()=> songRuntime.value.playing
+)
 </script>
 
 <template>
 	<div class="song-state">
 		<div class="cliper-back"></div>
 		<div
-			class="cliper"
+			:class="['cliper', songPlaying ? 'playing' : null]"
 			:style="{ clipPath: `inset(0px 0px 0px ${songPlayed * 100}% )` }"
 		></div>
 		<div class="song-image">
@@ -78,6 +81,9 @@ const songPlayed = computed(
 	@apply absolute top-0 left-0 w-full h-full
 	rounded bg-slate-200 dark:bg-slate-700
 	z-10 transition-all ease-in-out duration-300;
+}
+.cliper-back:has( + .cliper.playing){
+	@apply bg-green-300 dark:bg-green-600;
 }
 .song-image,
 .song-info {
