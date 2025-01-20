@@ -7,7 +7,7 @@ import {
   SpeakerWaveIcon,
 } from "@heroicons/vue/24/solid";
 import { useStorage, watchOnce } from "@vueuse/core";
-import { computed, onMounted, ref } from "vue";
+import { computed, nextTick, onMounted, ref } from "vue";
 
 import { useApi } from "@composables/useApi";
 import { UAudio } from "@/composables/useAudio";
@@ -72,6 +72,7 @@ onMounted(() => {
       songRuntime.value.playing = false;
       if (songRuntime.value.current > 0)
         $uaudio.value.currentTime = songRuntime.value.current;
+
       $uaudio.value.play();
       songRuntime.value.playing = true;
 
@@ -90,9 +91,12 @@ onMounted(() => {
 
   $bus.on("scrollbar-init", () => {
     if (playingSong.value.id !== -1) trigger(playingSong.value);
+    nextTick(() => {
+      $bus.off("scrollbar-init");
+    });
   });
   $bus.on("song-switch", () => {
-    $uaudio.value?.destroy();
+    $bus.emit("song-uniquify");
   });
 
   $bus.on("audio:time-update", (updateData) => {
@@ -120,7 +124,7 @@ onMounted(() => {
 
 <style lang="postcss" scoped>
 .song-control {
-  @apply absolute right-4 inline-flex justify-center items-center gap-2 px-3 py-1.5
+  @apply relative right-4 inline-flex justify-center items-center gap-2 px-3 py-1.5
   rounded bg-zinc-200 dark:bg-zinc-700
   transition-all ease-in-out duration-300;
 }

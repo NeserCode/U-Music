@@ -26,7 +26,7 @@ const songPlaying = computed(() => songRuntime.value.playing);
 </script>
 
 <template>
-  <div class="song-state">
+  <RouterLink class="song-state" to="song">
     <div class="cliper-back"></div>
     <div
       :class="['cliper', songPlaying ? 'playing' : null]"
@@ -40,12 +40,12 @@ const songPlaying = computed(() => songRuntime.value.playing);
       <span class="title" :title="song.title">{{ song.title }}</span>
       <span class="artist" :title="song.artist">{{ song.artist }}</span>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <style lang="postcss" scoped>
 .song-state {
-  @apply absolute left-4 inline-flex flex-nowrap flex-row items-center justify-center px-2 py-1 gap-1
+  @apply relative left-4 inline-flex flex-nowrap flex-row items-center justify-center px-2 py-1 gap-1
   rounded 
   transition-all ease-in-out duration-300;
 }

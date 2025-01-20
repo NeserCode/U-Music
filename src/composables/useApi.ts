@@ -5,6 +5,7 @@ import { useServerConfig } from "@composables/useServerConfig"
 import type {
 	BaseParams,
 	CountriesCodeSimpleReturn,
+	LyricSimpleReturn,
 	PlayListSimpleReturn,
 	SimpleIDParams,
 	SongResourceParams,
@@ -69,11 +70,15 @@ export const useApi = () => {
 	const getSongSearch = (params: SongSearchParams) =>
 		get<SongSearchReturn>("cloudsearch", params)
 
+	const getSongLyric = (params: SimpleIDParams)=>
+		get<LyricSimpleReturn>("lyric/new", params)
+
 	return {
 		getCountriesCodeList,
 		getTopLists,
 		getSongList,
 		getSongResource,
 		getSongSearch,
+		getSongLyric
 	}
 }

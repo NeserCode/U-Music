@@ -6,6 +6,8 @@ export class UAudio {
 	constructor(url: string) {
 		this.audio = new Audio(url)
 
+		this.audio.loop = true
+
 		this.audio.addEventListener("canplaythrough", () => {
 			$bus.emit("audio:canplaythrough")
 		})
@@ -24,6 +26,9 @@ export class UAudio {
 				duration: this.audio.duration,
 				buffered: this.audio.buffered,
 			})
+		})
+		$bus.on("song-uniquify", ()=>{
+			this.destroy()
 		})
 	}
 

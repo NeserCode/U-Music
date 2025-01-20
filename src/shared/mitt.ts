@@ -1,3 +1,5 @@
+import { LyricParsedData } from "./song"
+
 export interface MittHttpBaseParams {
 	fullPath: string
 	path?: string
@@ -17,6 +19,8 @@ export interface MittSongStateParams extends MittSongEventBaseParams {
 	title?: string
 	artist?: string
 	image?: string
+
+	lyric?: LyricParsedData[]
 }
 export interface MittSongRuntimeParams extends MittSongEventBaseParams {
 	playing: boolean
@@ -34,15 +38,18 @@ export interface MittAudioTimeUpdateParams {
 }
 
 export type MittEvent = {
+	"app-mounted": void
+
 	"title-set": string
-	"scrollbar-init"?: void
-	"dynamic-content-init"?: void
-	"http-request-init"?: MittHttpReqParams
-	"http-request-pending"?: MittHttpReqParams
-	"http-response"?: MittHttpResParams
+	"scrollbar-init": void
+	"dynamic-content-init": void
+	"http-request-init": MittHttpReqParams
+	"http-request-pending": MittHttpReqParams
+	"http-response": MittHttpResParams
 
 	"song-switch": MittSongStateParams
 	"song-play": MittSongRuntimeParams
+	"song-uniquify": void
 
 	"audio:canplaythrough": void
 	"audio:play": void

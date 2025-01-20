@@ -209,3 +209,16 @@ export interface SongData {
 	}
 	$raw: RawSongData
 }
+
+export type LyricMetaData = {
+	t: string
+	c: {
+		tx: string
+		li?: string
+		or?: string
+	}[]
+}
+export type LyricParsedData = {
+	timestamp: number
+	text: string
+}

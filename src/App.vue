@@ -6,6 +6,7 @@ import TopLinks from "@frameworks/TopLinks.vue";
 import { useAppRounded } from "@composables/useAppRounded";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import { $bus } from "./composables/useMitt";
 
 const $route = useRoute();
 const view = ref<HTMLDivElement>();
@@ -15,6 +16,7 @@ const { listeningRounded } = useAppRounded(application);
 
 onMounted(() => {
   listeningRounded(application);
+  $bus.emit("app-mounted");
 });
 </script>
 
