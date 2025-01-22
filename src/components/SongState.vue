@@ -26,7 +26,7 @@ const songPlaying = computed(() => songRuntime.value.playing);
 </script>
 
 <template>
-  <RouterLink class="song-state" to="song">
+  <RouterLink class="song-state" to="/song">
     <div class="cliper-back"></div>
     <div
       :class="['cliper', songPlaying ? 'playing' : null]"

@@ -1,63 +1,64 @@
-import { LyricParsedData } from "./song"
+import { LyricParsedData } from "./song";
 
 export interface MittHttpBaseParams {
-	fullPath: string
-	path?: string
+  fullPath: string;
+  path?: string;
 }
 export interface MittHttpReqParams extends MittHttpBaseParams {
-	params?: Record<string, string>
+  params?: Record<string, string>;
 }
 export interface MittHttpResParams extends MittHttpBaseParams {
-	status: number
-	data?: any
+  status: number;
+  data?: any;
 }
 
 export interface MittSongEventBaseParams {
-	id: number
+  id: number;
 }
 export interface MittSongStateParams extends MittSongEventBaseParams {
-	title?: string
-	artist?: string
-	image?: string
+  title?: string;
+  artist?: string;
+  image?: string;
 
-	lyric?: LyricParsedData[]
+  lyric?: LyricParsedData[];
 }
 export interface MittSongRuntimeParams extends MittSongEventBaseParams {
-	playing: boolean
-	mute: boolean
-	volume: number
-	url: string
-	duration: number
-	current: number
+  playing: boolean;
+  mute: boolean;
+  volume: number;
+  url: string;
+  duration: number;
+  current: number;
 }
 export interface MittAudioTimeUpdateParams {
-	duration: number
-	current: number
+  duration: number;
+  current: number;
 
-	buffered: TimeRanges
+  buffered: TimeRanges;
 }
 
 export type MittEvent = {
-	"app-mounted": void
+  "app-mounted": void;
 
-	"title-set": string
-	"scrollbar-init": void
-	"dynamic-content-init": void
-	"http-request-init": MittHttpReqParams
-	"http-request-pending": MittHttpReqParams
-	"http-response": MittHttpResParams
+  "title-set": string;
+  "scrollbar-init": void;
+  "dynamic-content-init": void;
+  "http-request-init": MittHttpReqParams;
+  "http-request-pending": MittHttpReqParams;
+  "http-response": MittHttpResParams;
 
-	"song-switch": MittSongStateParams
-	"song-play": MittSongRuntimeParams
-	"song-uniquify": void
+  "song-switch": MittSongStateParams;
+  "song-play": MittSongRuntimeParams;
+  "song-uniquify": void;
+  "song-lyric-active": number;
 
-	"audio:canplaythrough": void
-	"audio:play": void
-	"audio:pause": void
-	"audio:ended": void
-	"audio:time-change": number
-	"audio:time-update": MittAudioTimeUpdateParams
-	"audio:volume-change": number
-	"audio:mute-change": boolean
-	"audio:loop-change": boolean
-}
+  "audio:canplaythrough": void;
+  "audio:play": void;
+  "audio:pause": void;
+  "audio:ended": void;
+  "audio:time-change": number;
+  "audio:time-update": MittAudioTimeUpdateParams;
+  "audio:volume-change": number;
+  "audio:mute-change": boolean;
+  "audio:loop-change": boolean;
+};

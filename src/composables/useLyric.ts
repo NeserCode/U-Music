@@ -1,4 +1,5 @@
 import { LyricMetaData, LyricParsedData } from "@/shared";
+import { useStorage } from "@vueuse/core";
 
 export const useLyric = (raw: string[]) => {
   const lyric: LyricParsedData[] = [];
@@ -12,10 +13,15 @@ export const useLyric = (raw: string[]) => {
       timestamp: -1,
     };
     if (typeof jsoned === "string") {
-      const split = jsoned.slice(1).split("]");
+      let firstIndex = jsoned.slice(1).indexOf("]");
+      const split = [
+        jsoned.slice(1).slice(0, firstIndex),
+        jsoned.slice(1).slice(firstIndex + 1),
+      ];
       split[0].split(":").forEach((sn, i, arr) => {
-        parsed.timestamp +=
-          parseFloat(sn) * Math.pow(60, arr.length - i - 1) * 1000;
+        parsed.timestamp += Math.floor(
+          parseFloat(sn) * Math.pow(60, arr.length - i - 1) * 1000
+        );
       });
       parsed.text = split[1];
     } else {
@@ -29,3 +35,5 @@ export const useLyric = (raw: string[]) => {
 
   return lyric;
 };
+
+export const lyricMap = useStorage("u-lyric-map", new Map());
