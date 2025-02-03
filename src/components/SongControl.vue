@@ -20,7 +20,7 @@ const songRuntime = useStorage("song-runtime", {
   duration: 0,
   current: 0,
   playing: false,
-  volume: 0.5,
+  volume: 1.0,
   mute: false,
 });
 const playingSong = useStorage<MittSongStateParams>("u-playing-song", {
@@ -74,6 +74,7 @@ onMounted(() => {
         $uaudio.value.currentTime = songRuntime.value.current;
 
       $uaudio.value.play();
+      $uaudio.value.volume = 1.0;
       songRuntime.value.playing = true;
 
       songRuntime.value.volume = $uaudio.value.volume;

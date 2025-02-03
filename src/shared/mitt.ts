@@ -51,6 +51,7 @@ export type MittEvent = {
   "song-play": MittSongRuntimeParams;
   "song-uniquify": void;
   "song-lyric-active": number;
+  "song-change-time": number;
 
   "audio:canplaythrough": void;
   "audio:play": void;

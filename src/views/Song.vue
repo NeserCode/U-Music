@@ -9,6 +9,14 @@ import { useApi } from "@/composables/useApi";
 import { useLyric, lyricMap } from "@/composables/useLyric";
 import { $bus } from "@/composables/useMitt";
 
+const songRuntime = useStorage("song-runtime", {
+  url: undefined,
+  duration: 0,
+  current: 0,
+  playing: false,
+  volume: 1.0,
+  mute: false,
+});
 const playingSong = useStorage<MittSongStateParams>("u-playing-song", {
   id: -1,
   title: "当前未播放",
@@ -16,6 +24,15 @@ const playingSong = useStorage<MittSongStateParams>("u-playing-song", {
   image: "",
 });
 const activeLyricIndex = ref(0);
+
+const jumpToLyric = (index: number) => {
+  if (!lyricMap.value.get(playingSong.value.id)) return;
+  const shouldJumpTo = lyricMap.value.get(playingSong.value.id)[index];
+  console.log(shouldJumpTo);
+
+  if (shouldJumpTo === undefined) return;
+  else $bus.emit("song-change-time", shouldJumpTo.timestamp / 1000);
+};
 
 onMounted(() => {
   if (
@@ -31,10 +48,8 @@ onMounted(() => {
     watchOnce(data, () => {
       if (data.value?.code) {
         const rawLyric = data.value.lrc.lyric.split("\n");
-        console.log(rawLyric);
-
+        // console.log(rawLyric);
         lyricMap.value.set(playingSong.value.id, useLyric(rawLyric));
-
         playingSong.value.lyric = lyricMap.value.get(playingSong.value.id);
       }
     });
@@ -46,8 +61,10 @@ onMounted(() => {
     const lyric = playingSong.value.lyric;
     let activeIndex = 0;
 
-    if (!lyric || lyric.length <= 0 || !lyric[activeIndex]) return;
-    while (lyric[activeIndex].timestamp < now) activeIndex++;
+    if (!lyric || lyric.length <= 0) return;
+    while (lyric[activeIndex].timestamp < now)
+      if (!lyric[activeIndex + 1]) return;
+      else activeIndex++;
 
     $bus.emit("song-lyric-active", activeIndex - 1);
   });
@@ -81,6 +98,7 @@ onMounted(() => {
         <Scrollable el="#lyric">
           <p
             class="line"
+            @dblclick="jumpToLyric(index)"
             :class="{ active: activeLyricIndex == index }"
             v-for="(lyric, index) of playingSong.lyric"
           >
@@ -120,13 +138,13 @@ onMounted(() => {
 }
 
 #lyric {
-  @apply w-2/3 h-96;
+  @apply w-2/3 h-96 text-center;
 }
 #lyric .line {
-  @apply snap-center
-  transition-all ease-in-out duration-200;
+  @apply snap-center select-none cursor-pointer
+  transition-all ease-in-out duration-300;
 }
 .line.active {
-  @apply text-xl text-green-400;
+  @apply my-2 text-lg text-green-400;
 }
 </style>
