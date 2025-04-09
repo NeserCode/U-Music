@@ -23,7 +23,7 @@ export const useLyric = (raw: string[]) => {
           parseFloat(sn) * Math.pow(60, arr.length - i - 1) * 1000
         );
       });
-      parsed.text = split[1];
+      parsed.text = split[1];                                                                                                                                                                                        
     } else {
       parsed.timestamp = parseInt(jsoned.t);
       let temp = [];

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Back from "@/frameworks/Back.vue";
 import Scrollable from "@/frameworks/Scrollable.vue";
+import Ranger from "@/presets/Ranger.vue";
 import { useStorage, watchOnce } from "@vueuse/core";
 
 import type { MittSongStateParams } from "@/shared/mitt";
@@ -91,6 +92,8 @@ onMounted(() => {
           <span class="name">{{ playingSong.title }} </span>
           <span class="artist">{{ playingSong.artist }}</span>
         </span>
+
+        <Back />
       </div>
 
       <div id="lyric" v-if="!playingSong.lyric?.length">Lyrics Loading</div>
@@ -106,15 +109,16 @@ onMounted(() => {
           </p>
         </Scrollable>
       </div>
-      <Back />
     </div>
-    <div class="song-controllers"></div>
+    <div class="song-controllers">
+      <Ranger :total="songRuntime.duration" :current="songRuntime.current" />
+    </div>
   </div>
 </template>
 
 <style lang="postcss" scoped>
 .song-info {
-  @apply w-full flex flex-row justify-center p-12 gap-4
+  @apply w-full flex flex-row justify-between p-12 gap-4
   select-none;
 }
 
@@ -138,13 +142,26 @@ onMounted(() => {
 }
 
 #lyric {
-  @apply w-2/3 h-96 text-center;
+  @apply w-2/3 h-96 flex flex-col items-center
+  text-center 
+  transition-all duration-100;
 }
 #lyric .line {
-  @apply snap-center select-none cursor-pointer
-  transition-all ease-in-out duration-300;
+  @apply w-96 snap-center select-none cursor-pointer
+  transition-all ease-linear duration-100;
 }
 .line.active {
-  @apply my-2 text-lg text-green-400;
+  @apply my-0.5 text-green-400
+  scale-110;
+}
+.line.active + .line {
+  @apply opacity-100;
+}
+.line:not(.active) {
+  @apply opacity-70;
+}
+
+.song-controllers {
+  @apply absolute bottom-0 w-full h-fit;
 }
 </style>
