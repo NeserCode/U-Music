@@ -1,9 +1,9 @@
 export interface ListProfile {
-	id?: string
-	name?: string
-	cover?: string
-	description?: string
+  id?: string;
+  name?: string;
+  cover?: string;
+  description?: string;
 
-	createdAt?: Date
-	updatedAt: Date
+  createdAt?: Date;
+  updatedAt: Date;
 }

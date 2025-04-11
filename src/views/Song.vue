@@ -5,7 +5,7 @@ import Ranger from "@/presets/Ranger.vue";
 import { useStorage, watchOnce } from "@vueuse/core";
 
 import type { MittSongStateParams } from "@/shared/mitt";
-import { onMounted, ref, watch } from "vue";
+import { onActivated, onMounted, ref, watch } from "vue";
 import { useApi } from "@/composables/useApi";
 import { useLyric, lyricMap } from "@/composables/useLyric";
 import { $bus } from "@/composables/useMitt";
@@ -81,6 +81,9 @@ onMounted(() => {
     children[i]?.scrollIntoView({ block: "center", behavior: "smooth" });
   });
 });
+onActivated(() => {
+  console.log("Song!");
+});
 </script>
 
 <template>
@@ -98,7 +101,7 @@ onMounted(() => {
 
       <div id="lyric" v-if="!playingSong.lyric?.length">Lyrics Loading</div>
       <div id="lyric" v-else>
-        <Scrollable el="#lyric">
+        <Scrollable class="w-full">
           <p
             class="line"
             @dblclick="jumpToLyric(index)"
@@ -142,16 +145,16 @@ onMounted(() => {
 }
 
 #lyric {
-  @apply w-2/3 h-96 flex flex-col items-center
+  @apply w-full max-w-md h-96 flex flex-col items-center
   text-center 
   transition-all duration-100;
 }
 #lyric .line {
-  @apply w-96 snap-center select-none cursor-pointer
+  @apply w-full snap-center select-none cursor-pointer
   transition-all ease-linear duration-100;
 }
 .line.active {
-  @apply my-0.5 text-green-400
+  @apply my-0.5 font-semibold text-green-600 dark:text-green-400
   scale-110;
 }
 .line.active + .line {

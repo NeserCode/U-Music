@@ -99,7 +99,7 @@ html.dark {
 	transition-colors ease-in-out duration-300 overflow-hidden;
 }
 .app-container.rounded-style {
-  @apply rounded-lg;
+  @apply rounded-lg overflow-hidden;
 }
 
 #context {

@@ -13,6 +13,7 @@ import { useApi } from "@composables/useApi";
 import { UAudio } from "@/composables/useAudio";
 import { SongResourceParams } from "@/shared";
 import { MittSongStateParams } from "@/shared/mitt";
+// import { LocalList } from "@/composables/useLocalList";
 
 const $uaudio = ref<UAudio | null>(null);
 const songRuntime = useStorage("song-runtime", {
@@ -48,6 +49,7 @@ function toggleMute() {
 }
 
 onMounted(() => {
+  // const recentLocalList = new LocalList("recent");
   const { getSongResource } = useApi();
   const trigger = (song: MittSongStateParams) => {
     console.log("[Song Control] Switch", song);
@@ -91,8 +93,10 @@ onMounted(() => {
   });
 
   $bus.on("scrollbar-init", () => {
-    if (playingSong.value.id !== -1) trigger(playingSong.value);
     nextTick(() => {
+      setTimeout(() => {
+        if (playingSong.value.id !== -1) trigger(playingSong.value);
+      }, 1000);
       $bus.off("scrollbar-init");
     });
   });
